@@ -17,7 +17,7 @@
 @font-face {
   font-family: "WantedSans";
   src: url("/fonts/WantedSans-Bold.ttf") format("truetype");
-  font-weight: 700;
+  font-weight: bold;
   font-style: normal;
 }
 @font-face {
@@ -37,4 +37,39 @@
   src: url("/fonts/WantedSans-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
+}
+
+.title1 {
+  font-weight: bold;
+  font-size: 36px;
+}
+
+.title2 {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.subtitle1 {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.button1 {
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.body1 {
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.caption1 {
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.caption2 {
+  font-weight: 500;
+  font-size: 16px;
 }
