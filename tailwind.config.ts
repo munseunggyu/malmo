@@ -53,6 +53,14 @@ const config: Config = {
           2: "#2E2E2E",
           3: "#4F4F4F"
         }
+      },
+      spacing: {
+        xs: "8px",
+        sm: "16px",
+        md: "32px",
+        lg: "64px",
+        xl: "96px",
+        xxl: "128px"
       }
     }
   },
