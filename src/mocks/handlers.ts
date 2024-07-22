@@ -35,5 +35,26 @@ export const handlers = [
         }
       ]
     });
+  }),
+  http.get(apiUrl + "chat/messages/:roomId", ({ request, params }) => {
+    const { roomId } = params;
+    if (parseInt(roomId as string) < 10) {
+      return HttpResponse.json(
+        { message: "no such post" },
+        {
+          status: 404
+        }
+      );
+    }
+
+    return HttpResponse.json({
+      rooms: [
+        {
+          userMessage: "hello world",
+          aiMessages: "room category",
+          createdAt: "2024-07-22T11:01:34.691Z"
+        }
+      ]
+    });
   })
 ];
