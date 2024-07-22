@@ -2,17 +2,59 @@ import { http, HttpResponse } from "msw";
 
 const apiUrl = "http://localhost:9090/";
 export const handlers = [
-  http.get(apiUrl + "chat/rooms", () => {
-    return HttpResponse.json([
-      { tagId: 1, title: "제로초", count: 1264 },
-      { tagId: 2, title: "원초", count: 1264 },
-      { tagId: 3, title: "투초", count: 1264 },
-      { tagId: 4, title: "쓰리초", count: 1264 },
-      { tagId: 5, title: "포초", count: 1264 },
-      { tagId: 6, title: "파이브초", count: 1264 },
-      { tagId: 7, title: "식스초", count: 1264 },
-      { tagId: 8, title: "세븐초", count: 1264 },
-      { tagId: 9, title: "나인초", count: 1264 }
-    ]);
+  http.get(apiUrl + "user", ({ request }) => {
+    const url = new URL(request.url);
+    const id = parseInt(url.searchParams.get("id") as string) || 0;
+
+    return HttpResponse.json({
+      deleted: true,
+      deletedAt: "2024-07-22T10:08:11.370Z",
+      createdAt: "2024-07-22T10:08:11.370Z",
+      updatedAt: "2024-07-22T10:08:11.370Z",
+      userId: id,
+      email: "hello@naver.com"
+    });
+  }),
+  http.get(apiUrl + "chat/rooms", ({ request }) => {
+    const id = request.headers.get("user-id");
+    if (!id) {
+      return HttpResponse.json(
+        { message: "user not found" },
+        {
+          status: 401
+        }
+      );
+    }
+
+    return HttpResponse.json({
+      rooms: [
+        {
+          id: id,
+          roomName: "room name",
+          category: "room category"
+        }
+      ]
+    });
+  }),
+  http.get(apiUrl + "chat/messages/:roomId", ({ request, params }) => {
+    const { roomId } = params;
+    if (parseInt(roomId as string) < 10) {
+      return HttpResponse.json(
+        { message: "no such post" },
+        {
+          status: 404
+        }
+      );
+    }
+
+    return HttpResponse.json({
+      rooms: [
+        {
+          userMessage: "hello world",
+          aiMessages: "room category",
+          createdAt: "2024-07-22T11:01:34.691Z"
+        }
+      ]
+    });
   })
 ];
