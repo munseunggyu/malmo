@@ -9,6 +9,7 @@ const handler = NextAuth({
       clientSecret: process.env.NEXT_PUBLIC_NAVER_CLIENT_SECRET || ""
     })
   ],
+  secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ user }) {
       try {
@@ -30,6 +31,9 @@ const handler = NextAuth({
       return false;
     },
     async session({ session, token }) {
+      console.log(process.env.NEXT_PUBLIC_NAVER_CLIENT_ID);
+      console.log(process.env.NEXT_PUBLIC_NAVER_CLIENT_SECRET);
+      console.log(process.env.NEXT_PUBLIC_BASE_URL);
       return {
         ...session,
         id: token.sub
