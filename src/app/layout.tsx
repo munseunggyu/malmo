@@ -1,6 +1,7 @@
 import RQProvider from "@/providers/RQProvider";
 import "./globals.css";
 import type { Metadata } from "next";
+import AuthSession from "@/providers/AuthSession";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body>
-        <RQProvider>{children}</RQProvider>
+        <RQProvider>
+          <AuthSession>{children}</AuthSession>
+        </RQProvider>
       </body>
     </html>
   );
