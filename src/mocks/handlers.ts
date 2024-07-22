@@ -14,5 +14,26 @@ export const handlers = [
       userId: id,
       email: "hello@naver.com"
     });
+  }),
+  http.get(apiUrl + "chat/rooms", ({ request }) => {
+    const id = request.headers.get("user-id");
+    if (!id) {
+      return HttpResponse.json(
+        { message: "user not found" },
+        {
+          status: 401
+        }
+      );
+    }
+
+    return HttpResponse.json({
+      rooms: [
+        {
+          id: id,
+          roomName: "room name",
+          category: "room category"
+        }
+      ]
+    });
   })
 ];
