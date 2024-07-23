@@ -55,6 +55,7 @@ const config: Config = {
         }
       },
       spacing: {
+        xxs: "4px",
         xs: "8px",
         sm: "16px",
         md: "32px",
