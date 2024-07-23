@@ -7,7 +7,7 @@ import icoSetting from "../../public/ico-settings.svg";
 
 export default function Navbar() {
   return (
-    <nav className='flex flex-col w-[100px] bg-[#4f4f4f] h-screen py-[14px] px-[28px] items-center'>
+    <nav className='fixed flex flex-col w-[100px] bg-[#4f4f4f] h-full py-[14px] px-[28px] items-center'>
       <ul className='flex flex-col items-center '>
         <li>Logo</li>
         <li className='pt-[24px]'>
