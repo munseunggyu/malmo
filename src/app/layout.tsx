@@ -26,6 +26,7 @@ export default function RootLayout({
               </main>
               <h1 className='fixed top-lg right-[62px]'>말모말모</h1>
             </div>
+            <div id='portal' />
           </AuthSession>
         </RQProvider>
       </body>

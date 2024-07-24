@@ -1,8 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 import React from "react";
 
-import icoVideo from "../../../../public/ico-youtube.svg";
-
 import styles from "./guideBtn.module.css";
 
 interface IProps {
