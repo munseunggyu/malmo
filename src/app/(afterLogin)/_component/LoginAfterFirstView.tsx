@@ -7,6 +7,7 @@ import ModalContainer from "@/components/ui/ModalContainer";
 import ChatModal from "@/components/ChatModal";
 import { useModal } from "@/hook/useModal";
 import Button from "@/components/ui/Button";
+import NaverLoginBtn from "@/components/NaverLoginBtn";
 
 export default function LoginAfterFirstView() {
   const { openModal, handleCloseModal, handleOpenMoal } = useModal();
@@ -20,6 +21,7 @@ export default function LoginAfterFirstView() {
         당신의 아이디어를, 보다 멋지게 발전시켜드릴게요 어쩌구 저쩌구 모자 6개가
         어쩌구 저쩌구
       </p>
+      <NaverLoginBtn />
       <div className='flex gap-x-[12px]'>
         <GuideGrid />
         <CarouselUi containerClass={"w-[295px] "}>
