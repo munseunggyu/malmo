@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import divider from "../../../public/divider.svg";
 import icoArrow from "../../../public/ico-arrow.svg";
 
 import styles from "./dropdown.module.css";
@@ -27,50 +26,29 @@ const Dropdown = ({ selectedOption, setSelectedOption, options }: IProps) => {
   const bgColor = isOpen ? styles.open_bg : "bg-bg-3";
 
   return (
-    <div className={`relative w-full`}>
-      <div>
-        <button
-          onClick={toggleDropdown}
-          type='button'
-          className={`w-full flex items-center justify-between text-left ${bgColor} py-[24px] px-[20px] rounded-sm  ${
-            isOpen
-              ? "rounded-b-none border border-b-0 border-main "
-              : `${styles.select_btn}`
-          } `}
+    <div>
+      <button
+        onClick={toggleDropdown}
+        type='button'
+        className={`w-full flex items-center justify-between text-left ${bgColor} py-[24px] px-[20px] rounded-sm`}
+      >
+        <span
+          className={selectedOption === "선택해 주세요." ? "opacity-[0.6]" : ""}
         >
-          <span
-            className={
-              selectedOption === "선택해 주세요." ? "opacity-[0.6]" : ""
-            }
-          >
-            {selectedOption}
-          </span>
-          <Image
-            src={icoArrow}
-            alt={isOpen ? "open" : "close"}
-            width={32}
-            height={32}
-            className={isOpen ? "" : "origin-center rotate-180"}
-          />
-        </button>
-      </div>
+          {selectedOption}
+        </span>
+        <Image
+          src={icoArrow}
+          alt={isOpen ? "open" : "close"}
+          width={32}
+          height={32}
+          className={isOpen ? "" : "origin-center rotate-180"}
+        />
+      </button>
       {isOpen && (
-        <>
-          <div
-            className={`px-[20px] ${bgColor} border border-b-0 border-main border-t-0`}
-          >
-            <Image
-              src={divider}
-              alt='구분선'
-              width={110}
-              height={0}
-              style={{ width: "100%" }}
-            />
-          </div>
+        <div className={`relative w-full`}>
           <ul
-            className={`absolute z-10 w-full overflow-hidden rounded-sm rounded-t-none ${
-              isOpen ? "border border-t-0 border-main" : ""
-            } `}
+            className={`absolute z-10 top-4 w-full overflow-hidden rounded-sm  border border-main`}
           >
             {options.map((option, idx) => (
               <li
@@ -84,7 +62,7 @@ const Dropdown = ({ selectedOption, setSelectedOption, options }: IProps) => {
               </li>
             ))}
           </ul>
-        </>
+        </div>
       )}
     </div>
   );

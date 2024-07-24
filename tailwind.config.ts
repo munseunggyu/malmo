@@ -38,7 +38,8 @@ const config: Config = {
           5: "#808996",
           6: "#4E5867",
           7: "#2E3034",
-          8: "#0F0F10"
+          8: "#0F0F10",
+          9: "#ffffff99"
         },
         success: {
           1: "#FAFDFB",
@@ -52,6 +53,9 @@ const config: Config = {
           1: "#0B1014",
           2: "#2E2E2E",
           3: "#4F4F4F"
+        },
+        divider: {
+          1: "#424242"
         }
       },
       spacing: {
