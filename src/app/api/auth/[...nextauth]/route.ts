@@ -31,12 +31,13 @@ const handler = NextAuth({
       return false;
     },
     async session({ session, token }) {
-      console.log(process.env.NEXT_PUBLIC_NAVER_CLIENT_ID);
-      console.log(process.env.NEXT_PUBLIC_NAVER_CLIENT_SECRET);
       console.log(process.env.NEXT_PUBLIC_BASE_URL);
       return {
         ...session,
-        id: token.sub
+        user: {
+          ...session.user,
+          id: token.sub
+        }
       };
     }
   }
