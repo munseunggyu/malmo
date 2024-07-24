@@ -19,7 +19,7 @@ export default function RootLayout({
       <body>
         <RQProvider>
           <AuthSession>
-            <div className='flex relative'>
+            <div className='flex relative h-full'>
               <Navbar />
               <main className=' w-full pl-[100px] '>{children}</main>
               <h1 className='fixed top-lg right-[62px]'>말모말모</h1>

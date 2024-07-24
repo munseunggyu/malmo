@@ -24,7 +24,7 @@ export default function CarouselUi({
 }) {
   return (
     <Carousel
-      containerClass={`w-full flex gap-2 ${containerClass}`}
+      containerClass={`flex gap-2 ${containerClass}`}
       autoPlay={true}
       swipeable={false}
       draggable={true}
