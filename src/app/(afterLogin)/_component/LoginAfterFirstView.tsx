@@ -12,7 +12,7 @@ export default function LoginAfterFirstView() {
   const { openModal, handleCloseModal, handleOpenMoal } = useModal();
 
   return (
-    <div className='mt-[205px] mx-auto'>
+    <div className='mt-[205px] mx-auto flex flex-col items-center'>
       <h2 className='title1 leading-[130%] mb-xs'>
         당신의 아이디어를 더욱 빛나게!
       </h2>
@@ -22,7 +22,7 @@ export default function LoginAfterFirstView() {
       </p>
       <div className='flex gap-x-[12px]'>
         <GuideGrid />
-        <CarouselUi containerClass={"max-w-[295px]"}>
+        <CarouselUi containerClass={"w-[295px] "}>
           <div className='flex justify-center items-center'>1</div>
           <div className='flex justify-center items-center'>2</div>
           <div className='flex justify-center items-center'>3</div>
