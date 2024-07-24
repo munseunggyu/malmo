@@ -1,8 +1,16 @@
+"use client";
 import React from "react";
 import GuideGrid from "./GuideGrid";
 import CarouselUi from "@/components/ui/CarouselUi";
+import ModalPortal from "@/components/ui/ModalPortal";
+import ModalContainer from "@/components/ui/ModalContainer";
+import ChatModal from "@/components/ChatModal";
+import { useModal } from "@/hook/useModal";
+import Button from "@/components/ui/Button";
 
 export default function LoginAfterFirstView() {
+  const { openModal, handleCloseModal, handleOpenMoal } = useModal();
+
   return (
     <div className='mt-[205px] mx-auto'>
       <h2 className='title1 leading-[130%] mb-xs'>
@@ -23,6 +31,16 @@ export default function LoginAfterFirstView() {
           <div className='flex justify-center items-center'>6</div>
         </CarouselUi>
       </div>
+      <Button classNames='mt-md' onClick={handleOpenMoal}>
+        모달 오픈 test
+      </Button>
+      {openModal && (
+        <ModalPortal>
+          <ModalContainer handleCloseModal={handleCloseModal}>
+            <ChatModal handleCloseModal={handleCloseModal} />
+          </ModalContainer>
+        </ModalPortal>
+      )}
     </div>
   );
 }

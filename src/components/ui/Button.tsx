@@ -1,6 +1,6 @@
-import React from "react";
+import React, { ComponentPropsWithRef } from "react";
 
-interface IProps {
+interface IProps extends ComponentPropsWithRef<"button"> {
   children: React.ReactNode;
   classNames?: string;
   disabled?: boolean;
