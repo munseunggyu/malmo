@@ -1,18 +1,43 @@
+import AiMessageLoading from "@/components/ui/AiMessageLoading";
+import Image, { StaticImageData } from "next/image";
 import React from "react";
+import { IHatInfo, IMeetingRoomHat } from "../type/MeetingRoomHat";
 
-export default function AiComment() {
+interface IProps extends IHatInfo {
+  messages: string;
+}
+
+export default function AiComment({
+  messages,
+  img,
+  thought,
+  name,
+  characteristic
+}: IProps) {
   return (
     <div className='flex gap-x-sm '>
-      <div className='bg-blue-500 w-[50px] h-[50px] rounded-[50%]' />
+      <Image
+        src={img}
+        alt={name}
+        className='bg-blue-500 w-[50px] h-[50px] rounded-[50%]'
+      />
       <div>
-        <span>파랑이 | 통솔적 사고</span>
+        <span>
+          {name} | {thought}
+        </span>
         <p className='text-[#ffffff99] text-[14px] pt-[4px] pb-sm'>
-          아이디어를 발전시킬 수 있는 새로운 방향 제공
+          {characteristic}
         </p>
-        <p className='whitespace-pre-wrap break-keep font-[400]'>
-          생선 요리를 주제로 유튜브 콘텐츠를 만들려고 하시는군요. 그럼 저희
-          모자들이 회의를 시작해 보겠습니다.
-        </p>
+        {messages.length > 0 ? (
+          <p className='whitespace-pre-wrap break-keep font-[400] w-[620px]'>
+            {messages}
+          </p>
+        ) : (
+          <p className='whitespace-pre-wrap break-keep font-[400] w-[620px] mx-auto flex justify-center'>
+            <AiMessageLoading />
+          </p>
+        )}
+
         <div className='flex justify-end gap-x-xs mt-sm'>
           <button className='px-[12px] py-xs border border-bg-3 rounded-md text-grey-9 hover:bg-[#ffffff1a]'>
             <span>추가 회의하기</span>
