@@ -3,11 +3,13 @@ import { constants } from "@/utils";
 export const fetchNewMeeting = async ({
   category,
   message,
-  userId
+  userId,
+  roomId = null
 }: {
-  category: string;
+  category?: string;
   message: string;
   userId: string;
+  roomId?: number | null;
 }) => {
   try {
     const response = await fetch(constants.apiUrl + "chat", {
@@ -18,7 +20,8 @@ export const fetchNewMeeting = async ({
       },
       body: JSON.stringify({
         category,
-        message
+        message,
+        roomId
       })
     });
     const data = await response.json();

@@ -4,8 +4,8 @@ import React from "react";
 
 import styles from "./guideBtn.module.css";
 import { useSession } from "next-auth/react";
-import { fetchNewMeeting } from "@/services/newMeeting";
 import { useRouter } from "next/navigation";
+import { fetchNewMeeting } from "@/services/newMeeting";
 
 interface IProps {
   img: StaticImageData;
@@ -29,7 +29,7 @@ export default function GuideBtn({ img, alt, title, contents }: IProps) {
 
     if (response) {
       router.push(
-        `/meeting/${response.roomId}?chatPhaseId=${response.chatPhaseId}`
+        `/meeting/${response.roomId}?chatPhaseId1=${response.chatPhaseId}&phase=1&isNew=true`
       );
     }
   };

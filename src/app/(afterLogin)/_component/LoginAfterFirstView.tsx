@@ -39,7 +39,7 @@ export default function LoginAfterFirstView() {
       {openModal && (
         <ModalPortal>
           <ModalContainer handleCloseModal={handleCloseModal}>
-            <ChatModal handleCloseModal={handleCloseModal} />
+            <ChatModal handleCloseModal={handleCloseModal} isFrist={true} />
           </ModalContainer>
         </ModalPortal>
       )}
