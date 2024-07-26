@@ -1,10 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import icoNew from "../../public/ico-new.svg";
-import icoStar from "../../public/ico-star.svg";
-import icoHistoryfile from "../../public/ico-historyfile.svg";
+import moveItem from "../../public/moveItem.svg";
 import icoSetting from "../../public/ico-settings.svg";
 import mainLogo from "../../public/logo-malmo.png";
 import { signOut } from "next-auth/react";
@@ -17,6 +16,7 @@ import { useSelectedLayoutSegment } from "next/navigation";
 
 export default function Navbar() {
   const { openModal, handleCloseModal, handleOpenMoal } = useModal();
+  const [showSetting, setShowSetting] = useState(false);
 
   const segment = useSelectedLayoutSegment();
   console.log(segment);
@@ -62,8 +62,17 @@ export default function Navbar() {
           ></Link>
         </li>
       </ul>
-      <div className='mt-auto'>
-        <button onClick={handleSignOut}>
+      <div className='mt-auto relative'>
+        {showSetting && (
+          <button
+            onClick={handleSignOut}
+            className='absolute top-[-70px] right-[-140px] flex items-center gap-x-[10px] bg-[#2D2D2F] border border-[#ffffff1a] caption1 w-[176px] py-[12px] rounded-sm text-start px-[16px]'
+          >
+            <Image src={moveItem} width={24} height={24} alt='로그아웃' />{" "}
+            로그아웃
+          </button>
+        )}
+        <button onClick={() => setShowSetting(prev => !prev)}>
           <Image src={icoSetting} width={32} height={32} alt='설정' />
         </button>
       </div>
