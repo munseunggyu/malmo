@@ -88,7 +88,11 @@ body {
   color: #fff;
   height: 100%;
 }
-
+.react-multi-carousel-dot-list {
+  left: 27px !important;
+  justify-content: start !important;
+  bottom: 14px !important;
+}
 .react-multi-carousel-dot.react-multi-carousel-dot--active button {
   background-color: #979797;
   opacity: 1;

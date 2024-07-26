@@ -8,6 +8,7 @@
   gap: 36px;
   max-width: 483px;
   min-width: 413px;
+  height: 140px;
 }
 .guide_btn:hover {
   border: 1px solid #dffc1c;
