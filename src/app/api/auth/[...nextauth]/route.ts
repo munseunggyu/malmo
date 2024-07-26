@@ -1,8 +1,8 @@
 import { constants } from "@/utils";
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import NaverProvider from "next-auth/providers/naver";
 
-const handler = NextAuth({
+const authOptions: NextAuthOptions = {
   providers: [
     NaverProvider({
       clientId: process.env.NEXT_PUBLIC_NAVER_CLIENT_ID || "",
@@ -41,6 +41,8 @@ const handler = NextAuth({
       };
     }
   }
-});
+};
 
-export { handler as GET, handler as POST };
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST, authOptions };
