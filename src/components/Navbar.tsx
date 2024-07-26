@@ -1,11 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
 import icoNew from "../../public/ico-new.svg";
 import icoStar from "../../public/ico-star.svg";
 import icoHistoryfile from "../../public/ico-historyfile.svg";
 import icoSetting from "../../public/ico-settings.svg";
+import { signOut } from "next-auth/react";
 
 export default function Navbar() {
+  const handleSignOut = () => {
+    signOut({
+      redirect: true
+    });
+  };
   return (
     <nav className='fixed flex flex-col bg-[#4f4f4f] h-full py-[20px] px-[10px] items-center'>
       <ul className='flex flex-col items-center '>
@@ -27,7 +35,7 @@ export default function Navbar() {
         </li>
       </ul>
       <div className='mt-auto'>
-        <button>
+        <button onClick={handleSignOut}>
           <Image src={icoSetting} width={32} height={32} alt='설정' />
         </button>
       </div>
