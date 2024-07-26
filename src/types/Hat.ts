@@ -5,4 +5,6 @@ export type IHat =
   | "BLACK_HAT"
   | "YELLOW_HAT"
   | "GREEN_HAT"
-  | "BLUE_HAT_BEGIN";
+  | "BLUE_HAT_BEGIN"
+  | "SUMMARY_ROOM_NAME"
+  | "SUMMARY";
