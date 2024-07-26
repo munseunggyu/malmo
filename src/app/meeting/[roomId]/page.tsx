@@ -26,7 +26,7 @@ export default function MeetingPage({ params }: IProps) {
   const phase = ((searchParams.get("phase") || "1") as "1") || "2" || "3";
   const isNew = searchParams.get("isNew") || "";
 
-  const { sseMeetingData, setSseMeetingData } = useAiStream({
+  const { sseMeetingData, handleBookmark } = useAiStream({
     userId: user?.id,
     roomId: params.roomId,
     isNew,
@@ -46,6 +46,7 @@ export default function MeetingPage({ params }: IProps) {
           hats={sseMeetingData[phase].aiMessages}
           handleOpenMoal={handleOpenMoal}
           chatPhaseId3={sseMeetingData["3"].chatPhaseId}
+          handleBookmark={handleBookmark}
         />
         <MeetingResult />
       </section>

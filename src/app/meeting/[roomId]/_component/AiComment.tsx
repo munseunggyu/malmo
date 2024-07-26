@@ -5,6 +5,9 @@ import { IHatInfo, IMeetingRoomHat } from "../type/MeetingRoomHat";
 
 interface IProps extends IHatInfo {
   messages: string;
+  handleBookmark: (id: string) => void;
+  aiMessageId?: string;
+  bookmarked: boolean;
 }
 
 export default function AiComment({
@@ -12,8 +15,15 @@ export default function AiComment({
   img,
   thought,
   name,
-  characteristic
+  characteristic,
+  aiMessageId,
+  bookmarked,
+  handleBookmark
 }: IProps) {
+  const handleClickBookMark = () => {
+    if (!aiMessageId) return;
+    handleBookmark(aiMessageId);
+  };
   return (
     <div className='flex gap-x-sm '>
       <Image
@@ -23,7 +33,7 @@ export default function AiComment({
       />
       <div>
         <span>
-          {name} | {thought}
+          {name} | {thought} {aiMessageId}
         </span>
         <p className='text-[#ffffff99] text-[14px] pt-[4px] pb-sm'>
           {characteristic}
@@ -42,8 +52,11 @@ export default function AiComment({
           <button className='px-[12px] py-xs border border-bg-3 rounded-md text-grey-9 hover:bg-[#ffffff1a]'>
             <span>추가 회의하기</span>
           </button>
-          <button className='px-[12px] py-xs border border-bg-3 rounded-md text-grey-9 hover:bg-[#ffffff1a]'>
-            저장하기
+          <button
+            onClick={handleClickBookMark}
+            className='px-[12px] py-xs border border-bg-3 rounded-md text-grey-9 hover:bg-[#ffffff1a]'
+          >
+            저장하기 {bookmarked.toString()}
           </button>
         </div>
       </div>
