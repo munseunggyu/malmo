@@ -7,11 +7,19 @@ import icoStar from "../../public/ico-star.svg";
 import icoHistoryfile from "../../public/ico-historyfile.svg";
 import icoSetting from "../../public/ico-settings.svg";
 import { signOut } from "next-auth/react";
+import { useModal } from "@/hook/useModal";
+import ModalPortal from "./ui/ModalPortal";
+import ModalContainer from "./ui/ModalContainer";
+import ChatModal from "./ChatModal";
 
 export default function Navbar() {
+  const { openModal, handleCloseModal, handleOpenMoal } = useModal();
+
   const handleSignOut = () => {
     signOut({
-      redirect: true
+      redirect: false
+    }).then(() => {
+      window.location.reload();
     });
   };
   return (
@@ -19,7 +27,7 @@ export default function Navbar() {
       <ul className='flex flex-col items-center '>
         <li>Logo</li>
         <li className='pt-[24px]'>
-          <button>
+          <button onClick={handleOpenMoal}>
             <Image src={icoNew} width={64} height={64} alt='채팅 방 추가' />
           </button>
         </li>
@@ -39,6 +47,13 @@ export default function Navbar() {
           <Image src={icoSetting} width={32} height={32} alt='설정' />
         </button>
       </div>
+      {openModal && (
+        <ModalPortal>
+          <ModalContainer handleCloseModal={handleCloseModal}>
+            <ChatModal handleCloseModal={handleCloseModal} isFrist={true} />
+          </ModalContainer>
+        </ModalPortal>
+      )}
     </nav>
   );
 }
