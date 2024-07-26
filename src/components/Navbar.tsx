@@ -19,7 +19,6 @@ export default function Navbar() {
   const [showSetting, setShowSetting] = useState(false);
 
   const segment = useSelectedLayoutSegment();
-  console.log(segment);
 
   const handleSignOut = () => {
     signOut({
@@ -43,21 +42,21 @@ export default function Navbar() {
         </li>
         <li className='pt-[20px] h-[64px] mb-2'>
           <Link
-            href={"/star"}
-            className={`my-[14px] block w-[36px] h-[36px]  hover:bg-[url('/hoverStarImg.png')] hover:my-0 hover:w-[64px] hover:h-[64px] bg-cover bg-center ${
-              segment === "star"
-                ? "w-[64px] h-[64px] bg-[url('/activeStarImg.png')] my-0"
-                : "bg-[url('/ico-star.svg')]"
+            href={"/bookmark"}
+            className={` block w-[36px] h-[36px]  hover:bg-[url('/hoverStarImg.png')] hover:my-0 hover:w-[64px] hover:h-[64px] bg-cover bg-center ${
+              segment === "bookmark"
+                ? "w-[64px] h-[64px] bg-[url('/activeStarImg.png')] "
+                : "bg-[url('/ico-star.svg')] my-[14px]"
             }`}
           ></Link>
         </li>
         <li className='pt-[20px]  h-[64px]'>
           <Link
             href={"/history"}
-            className={`my-[14px] block w-[36px] h-[36px]  hover:bg-[url('/hoverHistoryImg.png')] hover:my-0 hover:w-[64px] hover:h-[64px] bg-cover bg-center ${
+            className={`block w-[36px] h-[36px]  hover:bg-[url('/hoverHistoryImg.png')] hover:my-0 hover:w-[64px] hover:h-[64px] bg-cover bg-center ${
               segment === "history"
                 ? "w-[64px] h-[64px] bg-[url('/activeHistoryImg.png')] my-0"
-                : "bg-[url('/ico-historyfile.svg')]"
+                : "bg-[url('/ico-historyfile.svg')] my-[14px] "
             }`}
           ></Link>
         </li>
