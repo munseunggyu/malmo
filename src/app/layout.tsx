@@ -29,7 +29,6 @@ export default async function RootLayout({
               <main className={`w-full ${user ? "pl-[84px]" : ""}`}>
                 {children}
               </main>
-              <h1 className='fixed top-lg right-[62px]'>말모말모</h1>
             </div>
             <div id='portal' />
           </AuthSession>

@@ -31,7 +31,6 @@ const authOptions: NextAuthOptions = {
       return false;
     },
     async session({ session, token }) {
-      console.log(process.env.NEXT_PUBLIC_BASE_URL);
       return {
         ...session,
         user: {
