@@ -26,7 +26,7 @@ export default async function RootLayout({
           <AuthSession>
             <div className='flex relative h-full'>
               {user && <Navbar />}
-              <main className={`w-full ${user ? "pl-[100px]" : ""}`}>
+              <main className={`w-full ${user ? "pl-[84px]" : ""}`}>
                 {children}
               </main>
               <h1 className='fixed top-lg right-[62px]'>말모말모</h1>

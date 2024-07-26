@@ -11,6 +11,7 @@ import { useModal } from "@/hook/useModal";
 import ModalPortal from "./ui/ModalPortal";
 import ModalContainer from "./ui/ModalContainer";
 import ChatModal from "./ChatModal";
+import Link from "next/link";
 
 export default function Navbar() {
   const { openModal, handleCloseModal, handleOpenMoal } = useModal();
@@ -37,9 +38,9 @@ export default function Navbar() {
           </button>
         </li>
         <li className='pt-[28px]'>
-          <button>
+          <Link href={"/history"}>
             <Image src={icoHistoryfile} width={36} height={36} alt='폴더' />
-          </button>
+          </Link>
         </li>
       </ul>
       <div className='mt-auto'>

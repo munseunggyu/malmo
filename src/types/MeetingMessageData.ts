@@ -11,6 +11,8 @@ export interface IAiMessages {
   thought: string;
   name: string;
   characteristic: string;
+  id?: string;
+  aiMessageId?: string;
 }
 
 export interface IMeetingMessageData {

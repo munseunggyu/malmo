@@ -291,7 +291,8 @@ export const useAiStream = ({
                     if (hat.role === hatRole) {
                       return {
                         ...hat,
-                        message: hat.message + json.message
+                        message: hat.message + json.message,
+                        aiMessageId: json.aiMessageId
                       };
                     }
                     return {
@@ -321,7 +322,7 @@ export const useAiStream = ({
   const handleGetMeeting = async () => {
     const res = await getMeeting({ userId: userId, roomId: Number(roomId) });
     if (res) {
-      if (res[1]) {
+      if (res[0]) {
         setSseMeetingData(prev => {
           return {
             ...prev,
@@ -332,7 +333,8 @@ export const useAiStream = ({
                 return {
                   ...roleInfo(message.role),
                   ...message,
-                  isFinish: true
+                  isFinish: true,
+                  aiMessageId: message.id
                 };
               })
             }
@@ -350,7 +352,8 @@ export const useAiStream = ({
                 return {
                   ...roleInfo(message.role),
                   ...message,
-                  isFinish: true
+                  isFinish: true,
+                  aiMessageId: message.id
                 };
               })
             }
@@ -368,7 +371,8 @@ export const useAiStream = ({
                 return {
                   ...roleInfo(message.role),
                   ...message,
-                  isFinish: true
+                  isFinish: true,
+                  aiMessageId: message.id
                 };
               })
             }
@@ -376,6 +380,37 @@ export const useAiStream = ({
         });
       }
     }
+  };
+
+  const handleBookmark = async (aiMessageId: string) => {
+    if (!userId) return;
+    const response = await fetch(
+      constants.apiUrl + `chat/bookmark/${aiMessageId}`,
+      {
+        method: "PUT",
+        headers: {
+          "user-id": userId
+        }
+      }
+    );
+    const data = await response.json();
+    setSseMeetingData(prev => ({
+      ...prev,
+      [phase]: {
+        ...prev[phase],
+        aiMessages: prev[phase].aiMessages.map((message: IAiMessages) => {
+          if (message.aiMessageId === aiMessageId) {
+            return {
+              ...message,
+              bookmarked: data.bookmarked
+            };
+          }
+          return {
+            ...message
+          };
+        })
+      }
+    }));
   };
 
   useEffect(() => {
@@ -422,5 +457,5 @@ export const useAiStream = ({
     startAi(chatPhaseId);
   }, [isNew, userId]);
 
-  return { sseMeetingData, setSseMeetingData };
+  return { sseMeetingData, setSseMeetingData, handleBookmark };
 };

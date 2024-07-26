@@ -105,10 +105,14 @@ export default function ChatModal({
   };
 
   useEffect(() => {
+    if (message.length > 0 && !isFrist) {
+      setDisabledBtn(false);
+      return;
+    }
     if (selectedOption !== "선택해 주세요." && message.length > 0)
       setDisabledBtn(false);
     if (message.length === 0) setDisabledBtn(true);
-  }, [selectedOption, message]);
+  }, [selectedOption, message, isFrist]);
 
   return (
     <div

@@ -10,12 +10,14 @@ interface IProps {
   hats: IMeetingRoomHat[];
   handleOpenMoal: () => void;
   chatPhaseId3: string;
+  handleBookmark: (id: string) => void;
 }
 
 export default function MeetingContents({
   hats,
   handleOpenMoal,
-  chatPhaseId3
+  chatPhaseId3,
+  handleBookmark
 }: IProps) {
   const [showBlur, setShowBlur] = useState(true);
   const bottomOfPanelRef = useRef<HTMLDivElement>(null);
@@ -24,7 +26,6 @@ export default function MeetingContents({
     threshold: 0,
     delay: 0
   });
-
   useEffect(() => {
     if (inView) {
       setShowBlur(false);
@@ -61,10 +62,13 @@ export default function MeetingContents({
           <li className='max-w-[688px]'>
             <AiComment
               messages={hats[0].message}
+              bookmarked={hats[0].bookmarked}
+              aiMessageId={hats[0].aiMessageId}
               img={hats[0].img}
               thought={hats[0].thought}
               name={hats[0].name}
               characteristic={hats[0].characteristic}
+              handleBookmark={handleBookmark}
             />
           </li>
           {hats[0].isFinish && (
@@ -72,9 +76,12 @@ export default function MeetingContents({
               <AiComment
                 messages={hats[1].message}
                 img={hats[1].img}
+                bookmarked={hats[1].bookmarked}
+                aiMessageId={hats[1].aiMessageId}
                 thought={hats[1].thought}
                 name={hats[1].name}
                 characteristic={hats[1].characteristic}
+                handleBookmark={handleBookmark}
               />
             </li>
           )}
@@ -83,9 +90,12 @@ export default function MeetingContents({
               <AiComment
                 messages={hats[2].message}
                 img={hats[2].img}
+                bookmarked={hats[2].bookmarked}
+                aiMessageId={hats[2].aiMessageId}
                 thought={hats[2].thought}
                 name={hats[2].name}
                 characteristic={hats[2].characteristic}
+                handleBookmark={handleBookmark}
               />
             </li>
           )}
@@ -94,9 +104,12 @@ export default function MeetingContents({
               <AiComment
                 messages={hats[3].message}
                 img={hats[3].img}
+                bookmarked={hats[3].bookmarked}
+                aiMessageId={hats[3].aiMessageId}
                 thought={hats[3].thought}
                 name={hats[3].name}
                 characteristic={hats[3].characteristic}
+                handleBookmark={handleBookmark}
               />
             </li>
           )}
@@ -105,9 +118,12 @@ export default function MeetingContents({
               <AiComment
                 messages={hats[4].message}
                 img={hats[4].img}
+                bookmarked={hats[4].bookmarked}
+                aiMessageId={hats[4].aiMessageId}
                 thought={hats[4].thought}
                 name={hats[4].name}
                 characteristic={hats[4].characteristic}
+                handleBookmark={handleBookmark}
               />
             </li>
           )}
@@ -116,9 +132,12 @@ export default function MeetingContents({
               <AiComment
                 messages={hats[5].message}
                 img={hats[5].img}
+                bookmarked={hats[5].bookmarked}
+                aiMessageId={hats[5].aiMessageId}
                 thought={hats[5].thought}
                 name={hats[5].name}
                 characteristic={hats[5].characteristic}
+                handleBookmark={handleBookmark}
               />
             </li>
           )}
@@ -127,9 +146,12 @@ export default function MeetingContents({
               <AiComment
                 messages={hats[6].message}
                 img={hats[6].img}
+                bookmarked={hats[6].bookmarked}
+                aiMessageId={hats[6].aiMessageId}
                 thought={hats[6].thought}
                 name={hats[6].name}
                 characteristic={hats[6].characteristic}
+                handleBookmark={handleBookmark}
               />
             </li>
           )}

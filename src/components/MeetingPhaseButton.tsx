@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -5,7 +7,7 @@ import React from "react";
 interface IProps {
   children: React.ReactNode;
   isOn?: boolean;
-  query: {
+  query?: {
     [k: string]: string;
   };
   phase: string;
