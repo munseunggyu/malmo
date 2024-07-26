@@ -101,6 +101,7 @@ export default function ChatModal({
           }&phase=${response.phase}&isNew=true`
         );
       }
+      handleCloseModal();
     }
   };
 

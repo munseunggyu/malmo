@@ -1,3 +1,4 @@
+import { getHistory } from "@/services/getHistory";
 import { getMeeting } from "@/services/getMeeting";
 import { IAiMessages } from "@/types/MeetingMessageData";
 import { constants, roleInfo } from "@/utils";
@@ -21,8 +22,10 @@ export const useAiStream = ({
   const router = useRouter();
   const searchParams = useSearchParams();
   const chatPhaseId1 = searchParams.get("chatPhaseId1") || "";
+  const isDirect = searchParams.get("isDirect") || "";
   const [isRefresh, setIsRefresh] = useState(true);
 
+  const [summaryRoomName, setSummaryRoomName] = useState("");
   const [sseMeetingData, setSseMeetingData] = useState({
     "1": {
       chatPhaseId: chatPhaseId1,
@@ -85,7 +88,10 @@ export const useAiStream = ({
           isFinish: false,
           ...roleInfo(constants.BLUE_HAT)
         }
-      ]
+      ],
+      summary: {
+        message: ""
+      }
     },
     "2": {
       chatPhaseId: "undefined",
@@ -148,7 +154,10 @@ export const useAiStream = ({
           isFinish: false,
           ...roleInfo(constants.BLUE_HAT)
         }
-      ]
+      ],
+      summary: {
+        message: ""
+      }
     },
     "3": {
       chatPhaseId: "undefined",
@@ -211,16 +220,21 @@ export const useAiStream = ({
           isFinish: false,
           ...roleInfo(constants.BLUE_HAT)
         }
-      ]
+      ],
+      summary: {
+        message: ""
+      }
     }
   });
 
   const fetchAiStream = async ({
     role = "BLUE_HAT",
-    chatPhaseId
+    chatPhaseId,
+    roleType
   }: {
     role: string;
     chatPhaseId: string;
+    roleType: "hats" | "title" | "summary";
   }) => {
     if (!userId) return;
 
@@ -247,26 +261,28 @@ export const useAiStream = ({
     while (true) {
       const { done, value } = await reader.read();
       if (done) {
-        setSseMeetingData(prev => {
-          return {
-            ...prev,
-            [phase]: {
-              ...prev[phase],
-              aiMessages: prev[phase].aiMessages.map(message => {
-                if (message.role === hatRole) {
-                  return {
-                    ...message,
-                    isFinish: true
-                  };
-                }
+        if (roleType === "hats") {
+          setSseMeetingData(prev => {
+            return {
+              ...prev,
+              [phase]: {
+                ...prev[phase],
+                aiMessages: prev[phase].aiMessages.map(message => {
+                  if (message.role === hatRole) {
+                    return {
+                      ...message,
+                      isFinish: true
+                    };
+                  }
 
-                return {
-                  ...message
-                };
-              })
-            }
-          };
-        });
+                  return {
+                    ...message
+                  };
+                })
+              }
+            };
+          });
+        }
         return true;
       }
       buffer += decoder.decode(value, { stream: true });
@@ -281,27 +297,44 @@ export const useAiStream = ({
           try {
             const json = JSON.parse(jsonText);
             hatRole = json.role;
-
-            setSseMeetingData(prev => {
-              return {
-                ...prev,
-                [phase]: {
-                  ...prev[phase],
-                  aiMessages: prev[phase].aiMessages.map(hat => {
-                    if (hat.role === hatRole) {
+            if (roleType === "title") {
+              setSummaryRoomName(json.message);
+            }
+            if (roleType === "hats") {
+              setSseMeetingData(prev => {
+                return {
+                  ...prev,
+                  [phase]: {
+                    ...prev[phase],
+                    aiMessages: prev[phase].aiMessages.map(hat => {
+                      if (hat.role === hatRole) {
+                        return {
+                          ...hat,
+                          message: hat.message + json.message,
+                          aiMessageId: json.aiMessageId
+                        };
+                      }
                       return {
-                        ...hat,
-                        message: hat.message + json.message,
-                        aiMessageId: json.aiMessageId
+                        ...hat
                       };
+                    })
+                  }
+                };
+              });
+            }
+            if (roleType === "summary") {
+              setSseMeetingData(prev => {
+                return {
+                  ...prev,
+                  [phase]: {
+                    ...prev[phase],
+                    summary: {
+                      message: json.message
                     }
-                    return {
-                      ...hat
-                    };
-                  })
-                }
-              };
-            });
+                  }
+                };
+              });
+            }
           } catch (e) {
             console.error("Error parsing JSON:", e);
           }
@@ -311,17 +344,62 @@ export const useAiStream = ({
   };
 
   const startAi = async (chatPhaseId: string) => {
+    if (phase === "1") {
+      fetchAiStream({
+        role: "SUMMARY_ROOM_NAME",
+        chatPhaseId,
+        roleType: "title"
+      });
+    }
     for (let i = 0; i < sseMeetingData[phase].aiMessages.length; i++) {
       const res = await fetchAiStream({
         role: sseMeetingData[phase].aiMessages[i].role,
-        chatPhaseId
+        chatPhaseId,
+        roleType: "hats"
       });
     }
+    fetchAiStream({
+      role: "SUMMARY",
+      chatPhaseId,
+      roleType: "summary"
+    });
   };
 
   const handleGetMeeting = async () => {
     const res = await getMeeting({ userId: userId, roomId: Number(roomId) });
+
+    let url = "";
+    if (userId) {
+      const historyList = await getHistory(userId);
+      const findRoom = historyList.find((history: { id: number }) => {
+        return String(history.id) === roomId;
+      });
+      setSummaryRoomName(findRoom.roomName);
+    }
     if (res) {
+      if (isDirect === "true") {
+        const nowPhase = phase;
+        let chatPhaseId1;
+        let chatPhaseId2;
+        let chatPhaseId3;
+        res.forEach((item: { chatPhaseId: number; phase: number }) => {
+          if (item.phase === 1) {
+            chatPhaseId1 = item.chatPhaseId;
+          }
+          if (item.phase === 2) {
+            chatPhaseId2 = item.chatPhaseId;
+          }
+          if (item.phase === 3) {
+            chatPhaseId3 = item.chatPhaseId;
+          }
+        });
+
+        url = `/meeting/${roomId}?chatPhaseId1=${chatPhaseId1}&chatPhaseId2=${chatPhaseId2}&chatPhaseId3=${chatPhaseId3}&phase=${nowPhase}&isNew=false`;
+        router.replace(url);
+      }
+      res.sort((a: { phase: number }, b: { phase: number }) => {
+        return a.phase - b.phase;
+      });
       if (res[0]) {
         setSseMeetingData(prev => {
           return {
@@ -329,14 +407,21 @@ export const useAiStream = ({
             ["1"]: {
               ...prev["1"],
               ...res[0],
-              aiMessages: res[0].aiMessages.map((message: IAiMessages) => {
-                return {
-                  ...roleInfo(message.role),
-                  ...message,
-                  isFinish: true,
-                  aiMessageId: message.id
-                };
-              })
+              summary: {
+                ...res[0].aiMessages.find(
+                  (ai: IAiMessages) => ai.role === "SUMMARY"
+                )
+              },
+              aiMessages: res[0].aiMessages
+                .sort((a: { id: number }, b: { id: number }) => a.id - b.id)
+                .map((message: IAiMessages) => {
+                  return {
+                    ...roleInfo(message.role),
+                    ...message,
+                    isFinish: true,
+                    aiMessageId: message.id
+                  };
+                })
             }
           };
         });
@@ -348,14 +433,21 @@ export const useAiStream = ({
             ["2"]: {
               ...prev["2"],
               ...res[0],
-              aiMessages: res[1].aiMessages.map((message: IAiMessages) => {
-                return {
-                  ...roleInfo(message.role),
-                  ...message,
-                  isFinish: true,
-                  aiMessageId: message.id
-                };
-              })
+              summary: {
+                ...res[1].aiMessages.find(
+                  (ai: IAiMessages) => ai.role === "SUMMARY"
+                )
+              },
+              aiMessages: res[1].aiMessages
+                .sort((a: { id: number }, b: { id: number }) => a.id - b.id)
+                .map((message: IAiMessages) => {
+                  return {
+                    ...roleInfo(message.role),
+                    ...message,
+                    isFinish: true,
+                    aiMessageId: message.id
+                  };
+                })
             }
           };
         });
@@ -367,14 +459,21 @@ export const useAiStream = ({
             ["3"]: {
               ...prev["3"],
               ...res[0],
-              aiMessages: res[2].aiMessages.map((message: IAiMessages) => {
-                return {
-                  ...roleInfo(message.role),
-                  ...message,
-                  isFinish: true,
-                  aiMessageId: message.id
-                };
-              })
+              summary: {
+                ...res[2].aiMessages.find(
+                  (ai: IAiMessages) => ai.role === "SUMMARY"
+                )
+              },
+              aiMessages: res[2].aiMessages
+                .sort((a: { id: number }, b: { id: number }) => a.id - b.id)
+                .map((message: IAiMessages) => {
+                  return {
+                    ...roleInfo(message.role),
+                    ...message,
+                    isFinish: true,
+                    aiMessageId: message.id
+                  };
+                })
             }
           };
         });
@@ -417,6 +516,10 @@ export const useAiStream = ({
     if (isNew === "false" && isRefresh) {
       handleGetMeeting();
     }
+    if (isDirect === "true") {
+      handleGetMeeting();
+      setIsRefresh(false);
+    }
     if (isNew !== "true") return;
     setIsRefresh(false);
     const chatPhaseId2 = searchParams.get("chatPhaseId2") || "";
@@ -453,9 +556,13 @@ export const useAiStream = ({
         }
       }));
     }
-
     startAi(chatPhaseId);
   }, [isNew, userId]);
 
-  return { sseMeetingData, setSseMeetingData, handleBookmark };
+  return {
+    sseMeetingData,
+    setSseMeetingData,
+    handleBookmark,
+    summaryRoomName
+  };
 };

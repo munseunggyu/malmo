@@ -11,18 +11,27 @@ interface IProps {
     [k: string]: string;
   };
   phase: string;
+  isMeetingRoom?: boolean;
+  roomId?: string;
 }
 
 export default function MeetingPhaseButton({
   children,
   isOn = false,
   query,
-  phase
+  phase,
+  isMeetingRoom = false,
+  roomId
 }: IProps) {
   const pathname = usePathname();
   const newQuery = { ...query, phase };
   const newQueryString = new URLSearchParams(newQuery).toString();
-  const newUrl = `${pathname}?${newQueryString}`;
+  let newUrl = "";
+  if (isMeetingRoom) {
+    newUrl = `${pathname}?${newQueryString}`;
+  } else {
+    newUrl = `/meeting/${roomId}?phase=${phase}&isDirect=true `;
+  }
   return (
     <Link
       href={newUrl}

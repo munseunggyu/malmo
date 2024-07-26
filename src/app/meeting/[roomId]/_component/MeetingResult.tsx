@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function MeetingResult() {
+export default function MeetingResult({ message }: { message: string }) {
   return (
     <section
       className=''
@@ -13,8 +13,8 @@ export default function MeetingResult() {
         회의 결과
       </h3>
       <section className='px-[40px] py-[20px] h-full'>
-        <p className='bg-bg-3 h-full rounded-md border border-main px-[40px] py-[20px]'>
-          내용
+        <p className='bg-bg-3 h-full rounded-md border border-main px-[40px] py-[20px] whitespace-pre-wrap break-keep overflow-scroll'>
+          {message}
         </p>
       </section>
     </section>

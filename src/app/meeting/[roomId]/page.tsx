@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import MeetingHeader from "./_component/MeetingHeader";
@@ -26,7 +26,7 @@ export default function MeetingPage({ params }: IProps) {
   const phase = ((searchParams.get("phase") || "1") as "1") || "2" || "3";
   const isNew = searchParams.get("isNew") || "";
 
-  const { sseMeetingData, handleBookmark } = useAiStream({
+  const { sseMeetingData, handleBookmark, summaryRoomName } = useAiStream({
     userId: user?.id,
     roomId: params.roomId,
     isNew,
@@ -35,7 +35,7 @@ export default function MeetingPage({ params }: IProps) {
 
   return (
     <div className='h-full'>
-      <MeetingHeader />
+      <MeetingHeader summaryRoomName={summaryRoomName} />
       <section
         className='flex'
         style={{
@@ -48,7 +48,7 @@ export default function MeetingPage({ params }: IProps) {
           chatPhaseId3={sseMeetingData["3"].chatPhaseId}
           handleBookmark={handleBookmark}
         />
-        <MeetingResult />
+        <MeetingResult message={sseMeetingData[phase].summary.message} />
       </section>
       {openModal && (
         <ModalPortal>
