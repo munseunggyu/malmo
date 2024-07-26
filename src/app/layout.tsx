@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import AuthSession from "@/providers/AuthSession";
 import Navbar from "@/components/Navbar";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import { authOptions } from "@/auth";
 
 export const metadata: Metadata = {
   title: "말모말모",
