@@ -1,19 +1,14 @@
-"use client";
-import Button from "@/components/ui/Button";
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
 import React from "react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth";
+import LoginAfterFirstView from "./_component/LoginAfterFirstView";
+import BeforeLoginView from "./_component/BeforeLoginView";
 
-export default function BeforeLoginPage() {
-  const { data } = useSession();
-  if (data?.user) {
-    redirect("home");
+export default async function BeforeLoginPage() {
+  const session = await getServerSession(authOptions);
+  const user = session?.user;
+  if (!user) {
+    return <BeforeLoginView />;
   }
-  return (
-    <div className="bg-[url('/first-bg.png')] bg-cover bg-center h-full ">
-      <div className='flex justify-center pt-[21%]'>
-        <Button>모자와 회의 하러가기 →</Button>
-      </div>
-    </div>
-  );
+  return <LoginAfterFirstView />;
 }
