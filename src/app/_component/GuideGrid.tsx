@@ -1,9 +1,9 @@
 import React from "react";
 import GuideBtn from "./GuideBtn";
 
-import icoVideo from "../../../../public/ico-youtube.svg";
-import icoTjfrmt from "../../../../public/ico-tjfrmt.svg";
-import icoBusiness from "../../../../public/ico-business.svg";
+import icoVideo from "../../../public/ico-youtube.svg";
+import icoTjfrmt from "../../../public/ico-tjfrmt.svg";
+import icoBusiness from "../../../public/ico-business.svg";
 import { StaticImageData } from "next/image";
 export default function GuideGrid() {
   const guideDataList = [
