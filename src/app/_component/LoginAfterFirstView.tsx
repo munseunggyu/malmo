@@ -23,7 +23,7 @@ export default function LoginAfterFirstView() {
     { img: white, link, name: "white" }
   ];
   return (
-    <div className='mt-[205px] mx-auto flex flex-col items-center'>
+    <div className='mx-auto flex flex-col items-center justify-center h-full'>
       <h2 className='title1 leading-[130%] mb-xs'>
         당신의 아이디어를 더욱 빛나게!
       </h2>
