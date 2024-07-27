@@ -1,12 +1,37 @@
 import { constants } from "@/utils";
 import { NextAuthOptions } from "next-auth";
 import NaverProvider from "next-auth/providers/naver";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { randomBytes } from "crypto";
+
+function generateRandomString(length: number) {
+  return randomBytes(length).toString("hex");
+}
+
+function generateRandomEmail() {
+  const randomString = generateRandomString(8);
+  return `${randomString}@example.com`;
+}
 
 const authOptions: NextAuthOptions = {
   providers: [
     NaverProvider({
       clientId: process.env.NEXT_PUBLIC_NAVER_CLIENT_ID || "",
       clientSecret: process.env.NEXT_PUBLIC_NAVER_CLIENT_SECRET || ""
+    }),
+    CredentialsProvider({
+      id: "telephone",
+      name: "Credentials",
+      credentials: {},
+      authorize(credentials, req) {
+        const randomId = generateRandomString(16);
+        const randomEmail = generateRandomEmail();
+
+        const user = { id: randomId, email: randomEmail };
+        console.log("user", user);
+
+        return user;
+      }
     })
   ],
   secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,

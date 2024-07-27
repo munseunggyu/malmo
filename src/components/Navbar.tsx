@@ -22,7 +22,6 @@ export default function Navbar() {
   const segment = useSelectedLayoutSegment();
 
   const handleSignOut = () => {
-    console.log("hi");
     signOut({
       redirect: false
     }).then(() => {
@@ -71,7 +70,7 @@ export default function Navbar() {
             className='absolute top-[-70px] right-[-140px] flex items-center gap-x-[10px] bg-[#2D2D2F] border border-[#ffffff1a] caption1 w-[176px] py-[12px] rounded-sm text-start px-[16px]'
           >
             <Image src={moveItem} width={24} height={24} alt='로그아웃' />{" "}
-            로그아웃?
+            로그아웃
           </button>
         )}
         <button onClick={() => setShowSetting(prev => !prev)}>
