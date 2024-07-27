@@ -23,7 +23,7 @@ export default function MeetingResult({
         회의 결과
       </h3>
       <section className='px-[40px] py-[20px] h-full'>
-        {message?.length === 0 ? (
+        {message?.length > 0 ? (
           <p className='bg-bg-3 h-full rounded-md border border-main px-[40px] py-[20px] whitespace-pre-wrap break-keep overflow-scroll'>
             {message}
           </p>
