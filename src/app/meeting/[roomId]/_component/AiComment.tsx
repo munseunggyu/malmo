@@ -1,13 +1,22 @@
 import AiMessageLoading from "@/components/ui/AiMessageLoading";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import React from "react";
-import { IHatInfo, IMeetingRoomHat } from "../type/MeetingRoomHat";
+import { IHatInfo } from "../type/MeetingRoomHat";
+import { useModal } from "@/hook/useModal";
+import ModalPortal from "@/components/ui/ModalPortal";
+import ModalContainer from "@/components/ui/ModalContainer";
+import ChatModal from "@/components/ChatModal";
+import { useSearchParams } from "next/navigation";
+
+import starImg from "../../../../../public/ico-star.svg";
+import starColorImg from "../../../../../public/ico-star-color.svg";
 
 interface IProps extends IHatInfo {
   messages: string;
   handleBookmark: (id: string) => void;
   aiMessageId?: string;
   bookmarked: boolean;
+  roomId: string;
 }
 
 export default function AiComment({
@@ -18,8 +27,12 @@ export default function AiComment({
   characteristic,
   aiMessageId,
   bookmarked,
-  handleBookmark
+  handleBookmark,
+  roomId
 }: IProps) {
+  const { openModal, handleOpenMoal, handleCloseModal } = useModal();
+  const searchParams = useSearchParams();
+  const phase = ((searchParams.get("phase") || "1") as "1") || "2" || "3";
   const handleClickBookMark = () => {
     if (!aiMessageId) return;
     handleBookmark(aiMessageId);
@@ -49,17 +62,34 @@ export default function AiComment({
         )}
 
         <div className='flex justify-end gap-x-xs mt-sm'>
-          <button className='px-[12px] py-xs border border-bg-3 rounded-md text-grey-9 hover:bg-[#ffffff1a]'>
-            <span>추가 회의하기</span>
-          </button>
           <button
             onClick={handleClickBookMark}
-            className='px-[12px] py-xs border border-bg-3 rounded-md text-grey-9 hover:bg-[#ffffff1a]'
+            className='px-[12px] py-xs border border-bg-3 rounded-md text-grey-9 hover:bg-[#ffffff1a] flex items-center gap-x-xs'
           >
-            저장하기 {bookmarked.toString()}
+            <Image
+              src={bookmarked ? starColorImg : starImg}
+              width={20}
+              height={20}
+              alt='북마크'
+            />{" "}
+            저장하기
           </button>
         </div>
       </div>
+      {openModal && (
+        <ModalPortal>
+          <ModalContainer handleCloseModal={handleCloseModal}>
+            <ChatModal
+              phase={phase}
+              roomId={roomId}
+              handleCloseModal={handleCloseModal}
+              chooseMessage={messages}
+              relyAiMessageId={aiMessageId}
+              name={name}
+            />
+          </ModalContainer>
+        </ModalPortal>
+      )}
     </div>
   );
 }

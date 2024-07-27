@@ -5,6 +5,7 @@ import { useInView } from "react-intersection-observer";
 import AiComment from "./AiComment";
 import Button from "@/components/ui/Button";
 import { IMeetingRoomHat } from "../type/MeetingRoomHat";
+import { useGptType } from "@/app/stores/gptType";
 
 interface IProps {
   hats: IMeetingRoomHat[];
@@ -14,6 +15,7 @@ interface IProps {
   loadingBtn: boolean;
   reStartAi: () => Promise<void>;
   nowIsStop: boolean;
+  roomId: string;
 }
 
 export default function MeetingContents({
@@ -23,10 +25,13 @@ export default function MeetingContents({
   handleBookmark,
   loadingBtn,
   reStartAi,
-  nowIsStop
+  nowIsStop,
+  roomId
 }: IProps) {
   const [showBlur, setShowBlur] = useState(true);
   const bottomOfPanelRef = useRef<HTMLDivElement>(null);
+
+  const gptType = useGptType(state => state.gptType);
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -75,6 +80,7 @@ export default function MeetingContents({
               name={hats[0].name}
               characteristic={hats[0].characteristic}
               handleBookmark={handleBookmark}
+              roomId={roomId}
             />
           </li>
           {hats[0].isFinish && (
@@ -88,6 +94,7 @@ export default function MeetingContents({
                 name={hats[1].name}
                 characteristic={hats[1].characteristic}
                 handleBookmark={handleBookmark}
+                roomId={roomId}
               />
             </li>
           )}
@@ -102,6 +109,7 @@ export default function MeetingContents({
                 name={hats[2].name}
                 characteristic={hats[2].characteristic}
                 handleBookmark={handleBookmark}
+                roomId={roomId}
               />
             </li>
           )}
@@ -116,6 +124,7 @@ export default function MeetingContents({
                 name={hats[3].name}
                 characteristic={hats[3].characteristic}
                 handleBookmark={handleBookmark}
+                roomId={roomId}
               />
             </li>
           )}
@@ -130,6 +139,7 @@ export default function MeetingContents({
                 name={hats[4].name}
                 characteristic={hats[4].characteristic}
                 handleBookmark={handleBookmark}
+                roomId={roomId}
               />
             </li>
           )}
@@ -144,6 +154,7 @@ export default function MeetingContents({
                 name={hats[5].name}
                 characteristic={hats[5].characteristic}
                 handleBookmark={handleBookmark}
+                roomId={roomId}
               />
             </li>
           )}
@@ -158,6 +169,7 @@ export default function MeetingContents({
                 name={hats[6].name}
                 characteristic={hats[6].characteristic}
                 handleBookmark={handleBookmark}
+                roomId={roomId}
               />
             </li>
           )}
@@ -179,6 +191,9 @@ export default function MeetingContents({
           ></div>
         )}
         <div className='absolute bottom-10 flex flex-col gap-[10px] items-center'>
+          <div className='text-[#ffffff33]'>
+            {gptType === "HYPER_CLOVA" ? "HyperCLOVA X" : "GPT-4o mini"}
+          </div>
           {chatPhaseId3 === "undefined" && hats[6]?.isFinish && (
             <Button
               onClick={handleOpenMoal}
