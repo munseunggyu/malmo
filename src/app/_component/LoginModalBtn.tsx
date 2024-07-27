@@ -15,7 +15,7 @@ export default function LoginModalBtn() {
       {openModal && (
         <ModalPortal>
           <ModalContainer handleCloseModal={handleCloseModal}>
-            <SignModal />
+            <SignModal handleCloseModal={handleCloseModal} />
           </ModalContainer>
         </ModalPortal>
       )}
