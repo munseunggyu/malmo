@@ -57,6 +57,7 @@ export default function MeetingPage({ params }: IProps) {
           loadingBtn={loadingBtn}
           reStartAi={reStartAi}
           nowIsStop={nowIsStop}
+          roomId={params.roomId}
         />
         <MeetingResult message={sseMeetingData[phase].summary.message} />
       </section>

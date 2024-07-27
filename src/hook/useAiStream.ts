@@ -1,3 +1,4 @@
+import { useGptType } from "@/app/stores/gptType";
 import { getHistory } from "@/services/getHistory";
 import { getMeeting } from "@/services/getMeeting";
 import { IHat } from "@/types/Hat";
@@ -28,13 +29,9 @@ interface IisStopMeeting {
   };
 }
 
-export const useAiStream = ({
-  userId,
-  gptType = "HYPER_CLOVA",
-  roomId,
-  isNew,
-  phase
-}: IAiStream) => {
+export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
+  const gptType = useGptType(state => state.gptType);
+  const changeGptType = useGptType(state => state.changeGptType);
   const router = useRouter();
   const searchParams = useSearchParams();
   const chatPhaseId1 = searchParams.get("chatPhaseId1") || "";
@@ -398,7 +395,8 @@ export const useAiStream = ({
       fetchAiStream({
         role: "SUMMARY_ROOM_NAME",
         chatPhaseId,
-        roleType: "title"
+        roleType: "title",
+        gptType: "OPEN_AI"
       });
     }
     for (let i = 0; i < sseMeetingData[phase].aiMessages.length; i++) {
@@ -406,7 +404,8 @@ export const useAiStream = ({
         const res = await fetchAiStream({
           role: sseMeetingData[phase].aiMessages[i].role,
           chatPhaseId,
-          roleType: "hats"
+          roleType: "hats",
+          gptType
         });
         if (res === "isFail") {
           return;
@@ -421,7 +420,8 @@ export const useAiStream = ({
     fetchAiStream({
       role: "SUMMARY",
       chatPhaseId,
-      roleType: "summary"
+      roleType: "summary",
+      gptType
     });
   };
 
@@ -436,6 +436,7 @@ export const useAiStream = ({
     } else {
       return;
     }
+    changeGptType("OPEN_AI");
     setLoadingBtn(true);
     for (let i = 0; i < hatsAfterRedHat.length; i++) {
       const res = await fetchAiStream({
