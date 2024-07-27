@@ -176,9 +176,7 @@ export default function ChatModal({
               type='button'
               className={`w-full flex items-center justify-end text-left  py-[8px] px-[16px] rounded-sm gap-x-xs`}
             >
-              <span className={"text-[#ffffff33]"}>
-                {gptType === "HYPER_CLOVA" ? "HyperCLOVA X" : "GPT-4o mini"}
-              </span>
+              <span className={"text-[#ffffff33]"}>{gptType.name}</span>
               <Image
                 src={icoArrow}
                 alt={gptToogle ? "open" : "close"}
@@ -198,7 +196,7 @@ export default function ChatModal({
                     <li
                       key={idx}
                       className={`cursor-pointer py-[8px] z-10 text-white px-sm  tex-center hover:bg-bg-3 ${
-                        option.value !== gptType ? "text-[#ffffff33]" : ""
+                        option.value !== gptType.value ? "text-[#ffffff33]" : ""
                       }`}
                       onClick={() => {
                         setGptToogle(false);
