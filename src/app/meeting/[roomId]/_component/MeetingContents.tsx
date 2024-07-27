@@ -205,7 +205,7 @@ export default function MeetingContents({
         )}
         <div className='absolute bottom-10 flex flex-col gap-[10px] items-center'>
           {isClient && <div className='text-[#ffffff33]'>{gptType.name}</div>}
-          {chatPhaseId3 === "undefined" && hats[6]?.isFinish && (
+          {chatPhaseId3 === "undefined" && hats[6]?.isFinish && !loadingBtn && (
             <Button
               onClick={handleOpenMoal}
               classNames='w-[380px]'
@@ -224,7 +224,7 @@ export default function MeetingContents({
             </Button>
           )}
           <p className='text-[12px] font-[400] text-[#ffffff66]'>
-            말모말모를 실수할 수 있으며 중요한 정보는 다시 한번 확인하시길
+            말모말모는 실수할 수 있으며 중요한 정보는 다시 한번 확인하시길
             바랍니다.
           </p>
         </div>
