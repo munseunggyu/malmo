@@ -33,7 +33,7 @@ export default function AiComment({
       />
       <div>
         <span>
-          {name} | {thought} {aiMessageId}
+          {name} | {thought}
         </span>
         <p className='text-[#ffffff99] text-[14px] pt-[4px] pb-sm'>
           {characteristic}
