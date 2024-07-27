@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import AiComment from "./AiComment";
 import Button from "@/components/ui/Button";
@@ -33,6 +33,11 @@ export default function MeetingContents({
 
   const gptType = useGptType(state => state.gptType);
 
+  const stopClick: MouseEventHandler<HTMLUListElement> = e => {
+    if (loadingBtn) e.preventDefault();
+    e.stopPropagation();
+  };
+
   const { ref, inView } = useInView({
     threshold: 0,
     delay: 0
@@ -46,12 +51,12 @@ export default function MeetingContents({
   }, [inView]);
 
   useEffect(() => {
-    if (bottomOfPanelRef.current) {
+    if (bottomOfPanelRef.current && loadingBtn) {
       bottomOfPanelRef.current.scrollIntoView({
         behavior: "smooth"
       });
     }
-  }, [hats]);
+  }, [hats, loadingBtn]);
 
   return (
     <section
