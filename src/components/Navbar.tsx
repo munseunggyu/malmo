@@ -34,31 +34,31 @@ export default function Navbar() {
       <ul className='flex flex-col items-center '>
         <li>
           <Link href={"/"}>
-            <Image src={mainLogo} alt='말모말모' width={64} height={64} />
+            <Image src={mainLogo} alt='말모말모' width={56} height={56} />
           </Link>
         </li>
         <li className='pt-[24px] hover:opacity-[0.8]'>
           <button onClick={handleOpenMoal}>
-            <Image src={icoNew} width={64} height={64} alt='채팅 방 추가' />
+            <Image src={icoNew} width={48} height={48} alt='채팅 방 추가' />
           </button>
         </li>
         <li className='pt-[20px] h-[64px] mb-2'>
           <Link
             href={"/bookmark"}
-            className={` block w-[36px] h-[36px]  hover:bg-[url('/hoverStarImg.png')] hover:my-0 hover:w-[64px] hover:h-[64px] bg-cover bg-center ${
+            className={` block w-[26px] h-[26px]  hover:bg-[url('/hoverStarImg.png')] hover:my-0 hover:w-[48px] hover:h-[48px] bg-cover bg-center ${
               segment === "bookmark"
-                ? "w-[64px] h-[64px] bg-[url('/activeStarImg.png')] "
-                : "bg-[url('/ico-star.svg')] my-[14px]"
+                ? "w-[48px] h-[48px] bg-[url('/activeStarImg.png')] "
+                : "bg-[url('/ico-star.svg')] my-[11px]"
             }`}
           ></Link>
         </li>
-        <li className='pt-[20px]  h-[64px]'>
+        <li className='pt-[20px]  h-[48px]'>
           <Link
             href={"/history"}
-            className={`block w-[36px] h-[36px]  hover:bg-[url('/hoverHistoryImg.png')] hover:my-0 hover:w-[64px] hover:h-[64px] bg-cover bg-center ${
+            className={`block w-[26px] h-[26px]  hover:bg-[url('/hoverHistoryImg.png')] hover:my-0 hover:w-[48px] hover:h-[48px] bg-cover bg-center ${
               segment === "history"
-                ? "w-[64px] h-[64px] bg-[url('/activeHistoryImg.png')] my-0"
-                : "bg-[url('/ico-historyfile.svg')] my-[14px] "
+                ? "w-[48px] h-[48px] bg-[url('/activeHistoryImg.png')] my-0"
+                : "bg-[url('/ico-historyfile.svg')] my-[11px] "
             }`}
           ></Link>
         </li>

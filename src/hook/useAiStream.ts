@@ -508,11 +508,12 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
         url = `/meeting/${roomId}?chatPhaseId1=${chatPhaseId1}&chatPhaseId2=${chatPhaseId2}&chatPhaseId3=${chatPhaseId3}&phase=${nowPhase}&isNew=false`;
         router.replace(url);
       }
-      res.sort((a: { phase: number }, b: { phase: number }) => {
-        return a.phase - b.phase;
+      const wow = res.sort((a: { phase: number }, b: { phase: number }) => {
+        return b.phase - a.phase;
       });
+      console.log("wow", wow);
       if (res[0]) {
-        const lastRole = res[0].aiMessages[res[0].aiMessages.length - 1].role;
+        const lastRole = res[0].aiMessages.sort()[0].role;
         if (lastRole !== constants.SUMMARY) {
           setIsStopMeeting(prev => ({
             ...prev,
@@ -555,8 +556,8 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
         });
       }
       if (res[1]) {
-        const lastRole = res[1].aiMessages[res[1].aiMessages.length - 1].role;
-        if (lastRole !== constants.SUMMARY || lastRole !== constants.BLUE_HAT) {
+        const lastRole = res[1].aiMessages[0].role;
+        if (lastRole !== constants.SUMMARY) {
           setIsStopMeeting(prev => ({
             ...prev,
             [phase]: {
@@ -598,8 +599,8 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
         });
       }
       if (res[2]) {
-        const lastRole = res[2].aiMessages[res[2].aiMessages.length - 1].role;
-        if (lastRole !== constants.SUMMARY || lastRole !== constants.BLUE_HAT) {
+        const lastRole = res[2].aiMessages[0].role;
+        if (lastRole !== constants.SUMMARY) {
           setIsStopMeeting(prev => ({
             ...prev,
             [phase]: {

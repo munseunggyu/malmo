@@ -28,8 +28,7 @@ export default function LoginAfterFirstView() {
         당신의 아이디어를 더욱 빛나게!
       </h2>
       <p className='body1 leading-[130%] mb-[36px]'>
-        당신의 아이디어를, 보다 멋지게 발전시켜드릴게요 어쩌구 저쩌구 모자 6개가
-        어쩌구 저쩌구
+        브레인 스토밍을 돕는 여섯 모자들과 함께 아이디어를 확장시켜봐요!
       </p>
       <div className='flex gap-x-[12px]'>
         <GuideGrid />
