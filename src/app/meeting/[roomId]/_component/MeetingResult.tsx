@@ -1,6 +1,16 @@
 import React from "react";
 
-export default function MeetingResult({ message }: { message: string }) {
+import workingImg from "../../../../../public/workong-img.png";
+import Image from "next/image";
+import AiMessageLoading from "@/components/ui/AiMessageLoading";
+
+export default function MeetingResult({
+  message,
+  isLoading
+}: {
+  message: string;
+  isLoading: boolean;
+}) {
   return (
     <section
       className=''
@@ -13,9 +23,29 @@ export default function MeetingResult({ message }: { message: string }) {
         회의 결과
       </h3>
       <section className='px-[40px] py-[20px] h-full'>
-        <p className='bg-bg-3 h-full rounded-md border border-main px-[40px] py-[20px] whitespace-pre-wrap break-keep overflow-scroll'>
-          {message}
-        </p>
+        {message?.length === 0 ? (
+          <p className='bg-bg-3 h-full rounded-md border border-main px-[40px] py-[20px] whitespace-pre-wrap break-keep overflow-scroll'>
+            {message}
+          </p>
+        ) : (
+          <div className='flex items-center flex-col w-full'>
+            {!isLoading ? (
+              <Image
+                src={workingImg}
+                width={320}
+                height={262}
+                alt='회의 결과 요약중...'
+              />
+            ) : (
+              <AiMessageLoading size={225} className='mb-md mt-sm' />
+            )}
+            <p className='subtitle1 text-center text-[#ffffff66] relative top-[-30px'>
+              회의가 끝나면
+              <br />
+              결과를 한 눈에 요약해 드려요!
+            </p>
+          </div>
+        )}
       </section>
     </section>
   );

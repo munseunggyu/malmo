@@ -28,6 +28,7 @@ export default function MeetingContents({
   nowIsStop,
   roomId
 }: IProps) {
+  const [isClient, setIsClient] = useState(false);
   const [showBlur, setShowBlur] = useState(true);
   const bottomOfPanelRef = useRef<HTMLDivElement>(null);
 
@@ -42,6 +43,10 @@ export default function MeetingContents({
     threshold: 0,
     delay: 0
   });
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   useEffect(() => {
     if (inView) {
       setShowBlur(false);
@@ -74,7 +79,10 @@ export default function MeetingContents({
           height: "calc(100% - 80px)"
         }}
       >
-        <ul className='flex flex-col gap-y-[12px] h-[75%] overflow-scroll'>
+        <ul
+          className='flex flex-col gap-y-[12px] h-[75%] overflow-scroll'
+          onClick={stopClick}
+        >
           <li className='max-w-[688px]'>
             <AiComment
               messages={hats[0].message}
@@ -196,10 +204,8 @@ export default function MeetingContents({
           ></div>
         )}
         <div className='absolute bottom-10 flex flex-col gap-[10px] items-center'>
-          <div className='text-[#ffffff33]'>
-            {gptType === "HYPER_CLOVA" ? "HyperCLOVA X" : "GPT-4o mini"}
-          </div>
-          {chatPhaseId3 === "undefined" && hats[6]?.isFinish && (
+          {isClient && <div className='text-[#ffffff33]'>{gptType.name}</div>}
+          {chatPhaseId3 === "undefined" && hats[6]?.isFinish && !loadingBtn && (
             <Button
               onClick={handleOpenMoal}
               classNames='w-[380px]'
@@ -218,7 +224,7 @@ export default function MeetingContents({
             </Button>
           )}
           <p className='text-[12px] font-[400] text-[#ffffff66]'>
-            말모말모를 실수할 수 있으며 중요한 정보는 다시 한번 확인하시길
+            말모말모는 실수할 수 있으며 중요한 정보는 다시 한번 확인하시길
             바랍니다.
           </p>
         </div>

@@ -59,7 +59,10 @@ export default function MeetingPage({ params }: IProps) {
           nowIsStop={nowIsStop}
           roomId={params.roomId}
         />
-        <MeetingResult message={sseMeetingData[phase].summary.message} />
+        <MeetingResult
+          message={sseMeetingData[phase].summary.message}
+          isLoading={sseMeetingData[phase].summary.isLoading}
+        />
       </section>
       {openModal && (
         <ModalPortal>

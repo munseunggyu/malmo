@@ -8,7 +8,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 interface IAiStream {
   userId: string | undefined;
-  gptType?: string;
   roomId: string;
   isNew: string;
   phase: "1";
@@ -119,7 +118,8 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
         }
       ],
       summary: {
-        message: ""
+        message: "",
+        isLoading: false
       }
     },
     "2": {
@@ -185,7 +185,8 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
         }
       ],
       summary: {
-        message: ""
+        message: "",
+        isLoading: false
       }
     },
     "3": {
@@ -251,7 +252,8 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
         }
       ],
       summary: {
-        message: ""
+        message: "",
+        isLoading: false
       }
     }
   });
@@ -268,6 +270,20 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
     gptType?: string;
   }) => {
     if (!userId) return;
+    if (roleType === "summary") {
+      setSseMeetingData(prev => {
+        return {
+          ...prev,
+          [phase]: {
+            ...prev[phase],
+            summary: {
+              message: prev[phase].summary.message,
+              isLoading: true
+            }
+          }
+        };
+      });
+    }
     const response = await fetch(constants.apiUrl + "chat/stream", {
       method: "POST",
       headers: {
@@ -284,6 +300,9 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
     // 응답을 스트림으로 처리
     if (response.status !== 200) {
       if (roleType !== "title") {
+        alert(
+          `답변 생생 도중 오류가 발생하였습니다.\n회의를 계속하고 싶다면 아래 ‘답변 재생성하기' 버튼을 눌러주세요.`
+        );
         setIsStopMeeting(prev => {
           return {
             ...prev,
@@ -375,7 +394,8 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
                   [phase]: {
                     ...prev[phase],
                     summary: {
-                      message: json.message
+                      message: json.message,
+                      isLoading: false
                     }
                   }
                 };
@@ -405,7 +425,7 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
           role: sseMeetingData[phase].aiMessages[i].role,
           chatPhaseId,
           roleType: "hats",
-          gptType
+          gptType: gptType.value
         });
         if (res === "isFail") {
           return;
@@ -421,7 +441,7 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
       role: "SUMMARY",
       chatPhaseId,
       roleType: "summary",
-      gptType
+      gptType: gptType.value
     });
   };
 
@@ -493,7 +513,7 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
       });
       if (res[0]) {
         const lastRole = res[0].aiMessages[res[0].aiMessages.length - 1].role;
-        if (lastRole !== constants.SUMMARY || lastRole !== constants.BLUE_HAT) {
+        if (lastRole !== constants.SUMMARY) {
           setIsStopMeeting(prev => ({
             ...prev,
             [phase]: {
