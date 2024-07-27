@@ -2,18 +2,23 @@
 
 import MeetingPhaseButton from "@/components/MeetingPhaseButton";
 import NoDataUi from "@/components/NoDataUi";
-import { useQueryClient } from "@tanstack/react-query";
+import { getHistory } from "@/services/getHistory";
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import HistoryItem from "./HistoryItem";
 
-interface IHistory {
+export interface IHistory {
   id: string;
   roomName: string | null;
   phase: number;
 }
 
-export default function HistoryList() {
-  const queryClient = useQueryClient();
-  const historyList = queryClient.getQueryData<IHistory[]>(["history"]);
+export default function HistoryList({ userId }: { userId: string }) {
+  const { data: historyList } = useQuery<IHistory[]>({
+    queryKey: ["history"],
+    queryFn: () => getHistory(userId),
+    staleTime: 0
+  });
 
   if (historyList?.length === 0) {
     return (
@@ -33,24 +38,9 @@ export default function HistoryList() {
           historyList.map(history => (
             <li
               key={history.id}
-              className='flex py-[29px] border-b border-b-bg-3'
+              className='flex py-[20px] border-b border-b-bg-3 items-center'
             >
-              <p className='max-w-[856px] w-full truncate'>
-                {history.roomName || "-"}
-              </p>
-              <ol className='min-w-[305px] flex gap-x-xs ml-auto'>
-                {Array.from({ length: history.phase }).map((_, index) => (
-                  <li key={index}>
-                    <MeetingPhaseButton
-                      phase={String(index + 1)}
-                      isOn={true}
-                      roomId={history.id}
-                    >
-                      {index + 1}
-                    </MeetingPhaseButton>
-                  </li>
-                ))}
-              </ol>
+              <HistoryItem {...history} />
             </li>
           ))}
       </ul>
