@@ -38,8 +38,6 @@ export default function BookMarkItem({ ...bookMark }: IBookMark) {
           const data = bookmarkList?.filter(
             item => item.aiMessageId !== bookMark.aiMessageId
           );
-          console.log("bookmarkList", bookmarkList);
-          console.log("data", data);
 
           queryClient.setQueryData(["bookmark"], data);
         }

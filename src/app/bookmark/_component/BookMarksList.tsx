@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { IHat } from "@/types/Hat";
 import NoDataUi from "@/components/NoDataUi";
 
 import BookMarkItem from "./BookMarkItem";
+import { getBookmark } from "@/services/getBookmark";
 
 export interface IBookMark {
   aiMessageId: number;
@@ -16,9 +17,11 @@ export interface IBookMark {
   roomPhaseId: number;
 }
 
-export default function BookMarksList() {
-  const queryClient = useQueryClient();
-  const bookmarkList = queryClient.getQueryData<IBookMark[]>(["bookmark"]);
+export default function BookMarksList({ userId }: { userId: string }) {
+  const { data: bookmarkList } = useQuery<IBookMark[]>({
+    queryKey: ["bookmark"],
+    queryFn: () => getBookmark(userId || "")
+  });
 
   if (bookmarkList?.length === 0) {
     return (
