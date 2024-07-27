@@ -14,8 +14,8 @@ export default function MeetingHeader({ summaryRoomName }: IProps) {
   const chatPhaseId3 = searchParams.get("chatPhaseId3");
 
   return (
-    <section className='flex items-center gap-[40px] px-[68px] py-[40px]'>
-      <h2 className='font-[700] text-[24px] truncate max-w-[500px]'>
+    <section className='flex items-center gap-[40px] px-[68px] py-[21px]'>
+      <h2 className='font-[700] text-[20px] truncate max-w-[500px]'>
         {summaryRoomName}
       </h2>
       <ul className='flex gap-xs'>
