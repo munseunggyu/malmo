@@ -15,12 +15,36 @@ export default function LoginAfterFirstView() {
   const link =
     "https://daisy-hacksaw-0a3.notion.site/60055e40a24e4b749d580c9b7ec71457";
   const carouselData = [
-    { img: green, link, name: "green" },
-    { img: black, link, name: "black" },
-    { img: red, link, name: "red" },
-    { img: blue, link, name: "blue" },
-    { img: yellow, link, name: "yellow" },
-    { img: white, link, name: "white" }
+    {
+      img: green,
+      link: "https://daisy-hacksaw-0a3.notion.site/60055e40a24e4b749d580c9b7ec71457?p=eb2db01e85cc42738f6344ad03d247da&pm=c",
+      name: "green"
+    },
+    {
+      img: black,
+      link: "https://daisy-hacksaw-0a3.notion.site/60055e40a24e4b749d580c9b7ec71457?p=ad5ab40190124a9bb4e208cf855fbd4a&pm=c",
+      name: "black"
+    },
+    {
+      img: red,
+      link: "https://daisy-hacksaw-0a3.notion.site/60055e40a24e4b749d580c9b7ec71457?p=b64a98d0f13b4c6a8baf11608b6aa12a&pm=c",
+      name: "red"
+    },
+    {
+      img: blue,
+      link: "https://daisy-hacksaw-0a3.notion.site/60055e40a24e4b749d580c9b7ec71457?p=fc9bf7c3c16c4d45a9d5d622841615ae&pm=c",
+      name: "blue"
+    },
+    {
+      img: yellow,
+      link: "https://daisy-hacksaw-0a3.notion.site/60055e40a24e4b749d580c9b7ec71457?p=3d79365feb2641db93d4ef8a029bbc25&pm=c",
+      name: "yellow"
+    },
+    {
+      img: white,
+      link: "https://daisy-hacksaw-0a3.notion.site/60055e40a24e4b749d580c9b7ec71457?p=0e8e11971b3342028abe316c923aa36d&pm=c",
+      name: "white"
+    }
   ];
   return (
     <div className='mx-auto flex flex-col items-center justify-center h-full'>
@@ -34,8 +58,20 @@ export default function LoginAfterFirstView() {
         <GuideGrid />
         <CarouselUi containerClass={"w-[244px] "}>
           {carouselData.map((item, idx) => (
-            <a href={item.link} key={idx} target='_blank' className='h-full'>
-              <Image src={item.img} alt={item.name} width={244} height={440} />
+            <a
+              href={item.link}
+              key={idx}
+              target='_blank'
+              className='h-full'
+              onDragStart={e => e.preventDefault()}
+            >
+              <Image
+                src={item.img}
+                alt={item.name}
+                width={244}
+                height={440}
+                onDragStart={e => e.preventDefault()}
+              />
             </a>
           ))}
         </CarouselUi>
