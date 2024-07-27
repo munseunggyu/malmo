@@ -8,7 +8,11 @@ import naverImg from "../../public/naver-login.png";
 
 export default function NaverLoginBtn() {
   const handleSignup = async () => {
-    signIn("naver", { redirect: true, callbackUrl: "/" });
+    // signIn("naver", { redirect: true, callbackUrl: "/" });
+    await signIn("credentials", {
+      redirect: true,
+      callbackUrl: "/"
+    });
   };
   return (
     <button onClick={handleSignup}>
