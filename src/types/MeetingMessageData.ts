@@ -13,8 +13,8 @@ export interface IAiMessages {
   characteristic: string;
   id?: string;
   aiMessageId?: string;
+  isStop: boolean;
 }
-
 export interface IMeetingMessageData {
   chatPhaseId: string;
   phase: "1";

@@ -11,13 +11,19 @@ interface IProps {
   handleOpenMoal: () => void;
   chatPhaseId3: string;
   handleBookmark: (id: string) => void;
+  loadingBtn: boolean;
+  reStartAi: () => Promise<void>;
+  nowIsStop: boolean;
 }
 
 export default function MeetingContents({
   hats,
   handleOpenMoal,
   chatPhaseId3,
-  handleBookmark
+  handleBookmark,
+  loadingBtn,
+  reStartAi,
+  nowIsStop
 }: IProps) {
   const [showBlur, setShowBlur] = useState(true);
   const bottomOfPanelRef = useRef<HTMLDivElement>(null);
@@ -113,7 +119,7 @@ export default function MeetingContents({
               />
             </li>
           )}
-          {hats[3].isFinish && (
+          {hats[3].isFinish && hats[4] && (
             <li className='max-w-[688px]'>
               <AiComment
                 messages={hats[4].message}
@@ -127,7 +133,7 @@ export default function MeetingContents({
               />
             </li>
           )}
-          {hats[4].isFinish && (
+          {hats[4]?.isFinish && hats[5] && (
             <li className='max-w-[688px]'>
               <AiComment
                 messages={hats[5].message}
@@ -141,7 +147,7 @@ export default function MeetingContents({
               />
             </li>
           )}
-          {hats[5].isFinish && (
+          {hats[5]?.isFinish && hats[6] && (
             <li className='max-w-[688px]'>
               <AiComment
                 messages={hats[6].message}
@@ -173,9 +179,22 @@ export default function MeetingContents({
           ></div>
         )}
         <div className='absolute bottom-10 flex flex-col gap-[10px] items-center'>
-          {chatPhaseId3 === "undefined" && hats[6].isFinish && (
-            <Button onClick={handleOpenMoal} classNames='w-[380px]'>
+          {chatPhaseId3 === "undefined" && hats[6]?.isFinish && (
+            <Button
+              onClick={handleOpenMoal}
+              classNames='w-[380px]'
+              disabled={loadingBtn}
+            >
               추가 회의하기
+            </Button>
+          )}
+          {nowIsStop && (
+            <Button
+              onClick={reStartAi}
+              classNames='w-[380px]'
+              disabled={loadingBtn}
+            >
+              답변 재생산하기
             </Button>
           )}
           <p className='text-[12px] font-[400] text-[#ffffff66]'>

@@ -1,7 +1,8 @@
 import { getHistory } from "@/services/getHistory";
 import { getMeeting } from "@/services/getMeeting";
+import { IHat } from "@/types/Hat";
 import { IAiMessages } from "@/types/MeetingMessageData";
-import { constants, roleInfo } from "@/utils";
+import { constants, hatsOrder, roleInfo } from "@/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 interface IAiStream {
@@ -10,6 +11,21 @@ interface IAiStream {
   roomId: string;
   isNew: string;
   phase: "1";
+}
+
+interface IisStopMeeting {
+  "1": {
+    isStop: boolean;
+    lastRole: IHat | null;
+  };
+  "2": {
+    isStop: boolean;
+    lastRole: IHat | null;
+  };
+  "3": {
+    isStop: boolean;
+    lastRole: IHat | null;
+  };
 }
 
 export const useAiStream = ({
@@ -24,7 +40,23 @@ export const useAiStream = ({
   const chatPhaseId1 = searchParams.get("chatPhaseId1") || "";
   const isDirect = searchParams.get("isDirect") || "";
   const [isRefresh, setIsRefresh] = useState(true);
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
+  const [isStopMeeting, setIsStopMeeting] = useState<IisStopMeeting>({
+    "1": {
+      isStop: false,
+      lastRole: null
+    },
+    "2": {
+      isStop: false,
+      lastRole: null
+    },
+    "3": {
+      isStop: false,
+      lastRole: null
+    }
+  });
+  const nowIsStop = isStopMeeting[phase].isStop;
   const [summaryRoomName, setSummaryRoomName] = useState("");
   const [sseMeetingData, setSseMeetingData] = useState({
     "1": {
@@ -230,14 +262,15 @@ export const useAiStream = ({
   const fetchAiStream = async ({
     role = "BLUE_HAT",
     chatPhaseId,
-    roleType
+    roleType,
+    gptType = "HYPER_CLOVA"
   }: {
-    role: string;
+    role: IHat;
     chatPhaseId: string;
     roleType: "hats" | "title" | "summary";
+    gptType?: string;
   }) => {
     if (!userId) return;
-
     const response = await fetch(constants.apiUrl + "chat/stream", {
       method: "POST",
       headers: {
@@ -252,6 +285,22 @@ export const useAiStream = ({
       })
     });
     // 응답을 스트림으로 처리
+    if (response.status !== 200) {
+      if (roleType !== "title") {
+        setIsStopMeeting(prev => {
+          return {
+            ...prev,
+            [phase]: {
+              ...prev[phase],
+              isStop: true,
+              lastRole: role
+            }
+          };
+        });
+        setLoadingBtn(false);
+        return "isFail";
+      }
+    }
     if (!response.body) return;
     const reader = response.body.getReader();
     const decoder = new TextDecoder("utf-8");
@@ -344,6 +393,7 @@ export const useAiStream = ({
   };
 
   const startAi = async (chatPhaseId: string) => {
+    setLoadingBtn(true);
     if (phase === "1") {
       fetchAiStream({
         role: "SUMMARY_ROOM_NAME",
@@ -352,17 +402,57 @@ export const useAiStream = ({
       });
     }
     for (let i = 0; i < sseMeetingData[phase].aiMessages.length; i++) {
-      const res = await fetchAiStream({
-        role: sseMeetingData[phase].aiMessages[i].role,
-        chatPhaseId,
-        roleType: "hats"
-      });
+      try {
+        const res = await fetchAiStream({
+          role: sseMeetingData[phase].aiMessages[i].role,
+          chatPhaseId,
+          roleType: "hats"
+        });
+        if (res === "isFail") {
+          return;
+        }
+      } catch (error) {
+        if (isStopMeeting[phase].isStop) {
+          console.log("Meeting stopped after error.");
+          break;
+        }
+      }
     }
     fetchAiStream({
       role: "SUMMARY",
       chatPhaseId,
       roleType: "summary"
     });
+  };
+
+  const reStartAi = async () => {
+    const errorHat: IHat | null = isStopMeeting[phase].lastRole;
+    if (!errorHat) return;
+    const chatPhaseId = sseMeetingData[phase].chatPhaseId;
+    const errorHatIndex = hatsOrder.indexOf(errorHat);
+    let hatsAfterRedHat = [];
+    if (errorHatIndex !== -1) {
+      hatsAfterRedHat = hatsOrder.slice(errorHatIndex);
+    } else {
+      return;
+    }
+    setLoadingBtn(true);
+    for (let i = 0; i < hatsAfterRedHat.length; i++) {
+      const res = await fetchAiStream({
+        role: hatsAfterRedHat[i],
+        chatPhaseId,
+        roleType: hatsAfterRedHat[i] === "SUMMARY" ? "summary" : "hats",
+        gptType: "OPEN_AI"
+      });
+    }
+    setIsStopMeeting(prev => ({
+      ...prev,
+      [phase]: {
+        ...prev[phase],
+        isStop: false
+      }
+    }));
+    setLoadingBtn(false);
   };
 
   const handleGetMeeting = async () => {
@@ -401,6 +491,17 @@ export const useAiStream = ({
         return a.phase - b.phase;
       });
       if (res[0]) {
+        const lastRole = res[0].aiMessages[res[0].aiMessages.length - 1].role;
+        if (lastRole !== constants.SUMMARY || lastRole !== constants.BLUE_HAT) {
+          setIsStopMeeting(prev => ({
+            ...prev,
+            [phase]: {
+              ...prev[phase],
+              isStop: true,
+              lastRole
+            }
+          }));
+        }
         setSseMeetingData(prev => {
           return {
             ...prev,
@@ -412,68 +513,108 @@ export const useAiStream = ({
                   (ai: IAiMessages) => ai.role === "SUMMARY"
                 )
               },
-              aiMessages: res[0].aiMessages
-                .sort((a: { id: number }, b: { id: number }) => a.id - b.id)
-                .map((message: IAiMessages) => {
-                  return {
-                    ...roleInfo(message.role),
-                    ...message,
-                    isFinish: true,
-                    aiMessageId: message.id
-                  };
+              aiMessages: [
+                ...prev["1"].aiMessages?.map(message => {
+                  const find = res[0].aiMessages.find(
+                    (item: IAiMessages) => item.role === message.role
+                  );
+                  if (find) {
+                    return {
+                      ...roleInfo(message.role),
+                      ...find,
+                      aiMessageId: find.id,
+                      isFinish: find.message.length > 0
+                    };
+                  }
+                  return message;
                 })
+              ]
             }
           };
         });
       }
       if (res[1]) {
+        const lastRole = res[1].aiMessages[res[1].aiMessages.length - 1].role;
+        if (lastRole !== constants.SUMMARY || lastRole !== constants.BLUE_HAT) {
+          setIsStopMeeting(prev => ({
+            ...prev,
+            [phase]: {
+              ...prev[phase],
+              isStop: true,
+              lastRole
+            }
+          }));
+        }
         setSseMeetingData(prev => {
           return {
             ...prev,
             ["2"]: {
               ...prev["2"],
-              ...res[0],
+              ...res[1],
               summary: {
                 ...res[1].aiMessages.find(
                   (ai: IAiMessages) => ai.role === "SUMMARY"
                 )
               },
-              aiMessages: res[1].aiMessages
-                .sort((a: { id: number }, b: { id: number }) => a.id - b.id)
-                .map((message: IAiMessages) => {
-                  return {
-                    ...roleInfo(message.role),
-                    ...message,
-                    isFinish: true,
-                    aiMessageId: message.id
-                  };
+              aiMessages: [
+                ...prev["2"].aiMessages?.map(message => {
+                  const find = res[1].aiMessages.find(
+                    (item: IAiMessages) => item.role === message.role
+                  );
+                  if (find) {
+                    return {
+                      ...roleInfo(message.role),
+                      ...find,
+                      aiMessageId: find.id,
+                      isFinish: find.message.length > 0
+                    };
+                  }
+                  return message;
                 })
+              ]
             }
           };
         });
       }
       if (res[2]) {
+        const lastRole = res[2].aiMessages[res[2].aiMessages.length - 1].role;
+        if (lastRole !== constants.SUMMARY || lastRole !== constants.BLUE_HAT) {
+          setIsStopMeeting(prev => ({
+            ...prev,
+            [phase]: {
+              ...prev[phase],
+              isStop: true,
+              lastRole
+            }
+          }));
+        }
         setSseMeetingData(prev => {
           return {
             ...prev,
             ["3"]: {
               ...prev["3"],
-              ...res[0],
+              ...res[2],
               summary: {
                 ...res[2].aiMessages.find(
                   (ai: IAiMessages) => ai.role === "SUMMARY"
                 )
               },
-              aiMessages: res[2].aiMessages
-                .sort((a: { id: number }, b: { id: number }) => a.id - b.id)
-                .map((message: IAiMessages) => {
-                  return {
-                    ...roleInfo(message.role),
-                    ...message,
-                    isFinish: true,
-                    aiMessageId: message.id
-                  };
+              aiMessages: [
+                ...prev["3"].aiMessages?.map(message => {
+                  const find = res[2].aiMessages.find(
+                    (item: IAiMessages) => item.role === message.role
+                  );
+                  if (find) {
+                    return {
+                      ...roleInfo(message.role),
+                      ...find,
+                      aiMessageId: find.id,
+                      isFinish: find.message.length > 0
+                    };
+                  }
+                  return message;
                 })
+              ]
             }
           };
         });
@@ -563,6 +704,9 @@ export const useAiStream = ({
     sseMeetingData,
     setSseMeetingData,
     handleBookmark,
-    summaryRoomName
+    summaryRoomName,
+    reStartAi,
+    loadingBtn,
+    nowIsStop
   };
 };
