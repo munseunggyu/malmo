@@ -8,17 +8,19 @@ import {
 import { getServerSession } from "next-auth";
 import React from "react";
 import HistoryList from "./_component/HistoryList";
+import { redirect } from "next/navigation";
 
 export default async function HistoryPage() {
   const session = await getServerSession(authOptions);
   const user = session?.user;
   if (!user) {
-    return <>Loading</>;
+    redirect("/");
   }
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ["history"],
-    queryFn: () => getHistory(user.id)
+    queryFn: () => getHistory(user.id),
+    staleTime: 0
   });
 
   const dehydratedState = dehydrate(queryClient);
