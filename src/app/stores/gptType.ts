@@ -6,7 +6,10 @@ interface IUseGptType {
 }
 
 export const useGptType = create<IUseGptType>(set => ({
-  gptType: localStorage.getItem("gptType") || "HYPER_CLOVA",
+  gptType:
+    typeof window !== "undefined"
+      ? window.localStorage.getItem("gptType") || "HYPER_CLOVA"
+      : "HYPER_CLOVA",
   changeGptType(type: string) {
     set(() => {
       localStorage.setItem("gptType", type);
