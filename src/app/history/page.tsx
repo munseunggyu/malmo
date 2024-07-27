@@ -1,10 +1,4 @@
 import { authOptions } from "@/auth";
-import { getHistory } from "@/services/getHistory";
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient
-} from "@tanstack/react-query";
 import { getServerSession } from "next-auth";
 import React from "react";
 import HistoryList from "./_component/HistoryList";
@@ -16,14 +10,6 @@ export default async function HistoryPage() {
   if (!user) {
     redirect("/");
   }
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({
-    queryKey: ["history"],
-    queryFn: () => getHistory(user.id),
-    staleTime: 0
-  });
-
-  const dehydratedState = dehydrate(queryClient);
 
   return (
     <div>
@@ -31,9 +17,7 @@ export default async function HistoryPage() {
         히스토리
       </h1>
 
-      <HydrationBoundary state={dehydratedState}>
-        <HistoryList />
-      </HydrationBoundary>
+      <HistoryList userId={user.id} />
     </div>
   );
 }
