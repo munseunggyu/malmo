@@ -400,6 +400,7 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
                   }
                 };
               });
+              setLoadingBtn(false);
             }
           } catch (e) {
             console.error("Error parsing JSON:", e);
