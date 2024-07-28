@@ -10,6 +10,7 @@ import { useSearchParams } from "next/navigation";
 
 import starImg from "../../../../../public/ico-star.svg";
 import starColorImg from "../../../../../public/ico-star-color.svg";
+import MarkdownViewer from "@/components/ui/MarkdownViewer";
 
 interface IProps extends IHatInfo {
   messages: string;
@@ -52,9 +53,7 @@ export default function AiComment({
           {characteristic}
         </p>
         {messages.length > 0 ? (
-          <p className='whitespace-pre-wrap break-keep font-[400] w-[620px]'>
-            {messages}
-          </p>
+          <MarkdownViewer content={messages}></MarkdownViewer>
         ) : (
           <p className='whitespace-pre-wrap break-keep font-[400] w-[620px] mx-auto flex justify-center'>
             <AiMessageLoading />

@@ -8,6 +8,28 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      typography: (theme: (arg0: string) => any) => ({
+        white: {
+          css: {
+            "--tw-prose-body": theme("colors.white"),
+            "--tw-prose-headings": theme("colors.white"),
+            "--tw-prose-lead": theme("colors.white"),
+            "--tw-prose-bold": theme("colors.white"),
+            "--tw-prose-counters": theme("colors.white"),
+            "--tw-prose-bullets": theme("colors.white"),
+            "--tw-prose-hr": theme("colors.white"),
+            "--tw-prose-links": "#959595",
+            "--tw-prose-quotes": theme("colors.white"),
+            "--tw-prose-quote-borders": theme("colors.white"),
+            "--tw-prose-captions": theme("colors.white"),
+            "--tw-prose-code": theme("colors.white"),
+            "--tw-prose-pre-code": theme("colors.white"),
+            "--tw-prose-pre-bg": "none",
+            "--tw-prose-th-borders": theme("colors.white"),
+            "--tw-prose-td-borders": theme("colors.white")
+          }
+        }
+      }),
       fontFamily: {
         sans: ["WantedSans"]
       },
@@ -69,6 +91,6 @@ const config: Config = {
       }
     }
   },
-  plugins: []
+  plugins: [require("@tailwindcss/typography")]
 };
 export default config;

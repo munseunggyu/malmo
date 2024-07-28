@@ -9,6 +9,7 @@ import MeetingPhaseButton from "@/components/MeetingPhaseButton";
 import { constants, roleInfo } from "@/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import MarkdownViewer from "@/components/ui/MarkdownViewer";
 
 export default function BookMarkItem({ ...bookMark }: IBookMark) {
   const queryClient = useQueryClient();
@@ -93,9 +94,9 @@ export default function BookMarkItem({ ...bookMark }: IBookMark) {
               {roleData.name} | {roleData.thought}
             </span>
           </div>
-          <p className='whitespace-pre-wrap break-keep overflow-scroll'>
-            {bookMark.message}
-          </p>
+          <div className='overflow-scroll'>
+            <MarkdownViewer content={bookMark.message} />
+          </div>
         </div>
       </div>
     </div>
