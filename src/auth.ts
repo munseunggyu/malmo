@@ -28,7 +28,6 @@ const authOptions: NextAuthOptions = {
         const randomEmail = generateRandomEmail();
 
         const user = { id: randomId, email: randomEmail };
-        console.log("user", user);
 
         return user;
       }
