@@ -1,11 +1,9 @@
 "use client";
 
-import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
-import { useInView } from "react-intersection-observer";
-import AiComment from "./AiComment";
+import React from "react";
 import Button from "@/components/ui/Button";
 import { IMeetingRoomHat } from "../type/MeetingRoomHat";
-import { useGptType } from "@/app/stores/gptType";
+import { MeetingContentsList } from "./MeetingContentsList";
 
 interface IProps {
   hats: IMeetingRoomHat[];
@@ -28,35 +26,6 @@ export default function MeetingContents({
   nowIsStop,
   roomId
 }: IProps) {
-  const [showBlur, setShowBlur] = useState(true);
-  const bottomOfPanelRef = useRef<HTMLDivElement>(null);
-
-  const stopClick: MouseEventHandler<HTMLUListElement> = e => {
-    if (loadingBtn) e.preventDefault();
-    e.stopPropagation();
-  };
-
-  const { ref, inView } = useInView({
-    threshold: 0,
-    delay: 0
-  });
-
-  useEffect(() => {
-    if (inView) {
-      setShowBlur(false);
-    } else {
-      setShowBlur(true);
-    }
-  }, [inView]);
-
-  useEffect(() => {
-    if (bottomOfPanelRef.current && loadingBtn) {
-      bottomOfPanelRef.current.scrollIntoView({
-        behavior: "smooth"
-      });
-    }
-  }, [hats, loadingBtn]);
-
   return (
     <section
       className='border border-r-divider-1 border-l-0 border-y-0 relative'
@@ -73,130 +42,12 @@ export default function MeetingContents({
           height: "calc(100% - 80px)"
         }}
       >
-        <ul
-          className='flex flex-col gap-y-[12px] h-[75%] overflow-scroll'
-          onClick={stopClick}
-        >
-          <li className='max-w-[688px]'>
-            <AiComment
-              messages={hats[0].message}
-              bookmarked={hats[0].bookmarked}
-              aiMessageId={hats[0].aiMessageId}
-              img={hats[0].img}
-              thought={hats[0].thought}
-              name={hats[0].name}
-              characteristic={hats[0].characteristic}
-              handleBookmark={handleBookmark}
-              roomId={roomId}
-            />
-          </li>
-          {hats[0].isFinish && (
-            <li className='max-w-[688px]'>
-              <AiComment
-                messages={hats[1].message}
-                img={hats[1].img}
-                bookmarked={hats[1].bookmarked}
-                aiMessageId={hats[1].aiMessageId}
-                thought={hats[1].thought}
-                name={hats[1].name}
-                characteristic={hats[1].characteristic}
-                handleBookmark={handleBookmark}
-                roomId={roomId}
-              />
-            </li>
-          )}
-          {hats[1].isFinish && (
-            <li className='max-w-[688px]'>
-              <AiComment
-                messages={hats[2].message}
-                img={hats[2].img}
-                bookmarked={hats[2].bookmarked}
-                aiMessageId={hats[2].aiMessageId}
-                thought={hats[2].thought}
-                name={hats[2].name}
-                characteristic={hats[2].characteristic}
-                handleBookmark={handleBookmark}
-                roomId={roomId}
-              />
-            </li>
-          )}
-          {hats[2].isFinish && (
-            <li className='max-w-[688px]'>
-              <AiComment
-                messages={hats[3].message}
-                img={hats[3].img}
-                bookmarked={hats[3].bookmarked}
-                aiMessageId={hats[3].aiMessageId}
-                thought={hats[3].thought}
-                name={hats[3].name}
-                characteristic={hats[3].characteristic}
-                handleBookmark={handleBookmark}
-                roomId={roomId}
-              />
-            </li>
-          )}
-          {hats[3].isFinish && hats[4] && (
-            <li className='max-w-[688px]'>
-              <AiComment
-                messages={hats[4].message}
-                img={hats[4].img}
-                bookmarked={hats[4].bookmarked}
-                aiMessageId={hats[4].aiMessageId}
-                thought={hats[4].thought}
-                name={hats[4].name}
-                characteristic={hats[4].characteristic}
-                handleBookmark={handleBookmark}
-                roomId={roomId}
-              />
-            </li>
-          )}
-          {hats[4]?.isFinish && hats[5] && (
-            <li className='max-w-[688px]'>
-              <AiComment
-                messages={hats[5].message}
-                img={hats[5].img}
-                bookmarked={hats[5].bookmarked}
-                aiMessageId={hats[5].aiMessageId}
-                thought={hats[5].thought}
-                name={hats[5].name}
-                characteristic={hats[5].characteristic}
-                handleBookmark={handleBookmark}
-                roomId={roomId}
-              />
-            </li>
-          )}
-          {hats[5]?.isFinish && hats[6] && (
-            <li className='max-w-[688px]'>
-              <AiComment
-                messages={hats[6].message}
-                img={hats[6].img}
-                bookmarked={hats[6].bookmarked}
-                aiMessageId={hats[6].aiMessageId}
-                thought={hats[6].thought}
-                name={hats[6].name}
-                characteristic={hats[6].characteristic}
-                handleBookmark={handleBookmark}
-                roomId={roomId}
-              />
-            </li>
-          )}
-
-          <li ref={ref} className='text-bg-1'>
-            -
-          </li>
-          <li>
-            <div ref={bottomOfPanelRef}></div>
-          </li>
-        </ul>
-        {showBlur && (
-          <div
-            className='w-full h-[60px] relative top-[-60px]'
-            style={{
-              background:
-                " linear-gradient(180deg, rgba(11, 16, 20, 0.00) 0%, #0B1014 100%)"
-            }}
-          ></div>
-        )}
+        <MeetingContentsList
+          hats={hats}
+          handleBookmark={handleBookmark}
+          roomId={roomId}
+          loadingBtn={loadingBtn}
+        />
         <div className='absolute bottom-10 flex flex-col gap-[10px] items-center'>
           {chatPhaseId3 === "undefined" && hats[6]?.isFinish && !loadingBtn && (
             <Button
