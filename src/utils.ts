@@ -6,6 +6,7 @@ import redHatImg from "../public/hats/red-hat.png";
 import whiteHatImg from "../public/hats/white-hat.png";
 
 import { IHat } from "./types/Hat";
+import { IRoleInfo } from "./types/RoleInfo";
 
 interface IConstants {
   apiUrl: string;
@@ -41,7 +42,7 @@ export const allHats = [
   constants.BLUE_HAT
 ];
 
-export const roleInfo = (role: IHat) => {
+export const roleInfo = (role: IHat): IRoleInfo => {
   if (role === constants.BLUE_HAT_BEGIN) {
     return {
       img: blueHatImg,
