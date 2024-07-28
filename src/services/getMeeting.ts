@@ -1,4 +1,4 @@
-import { constants, roleInfo } from "@/utils";
+import { constants } from "@/utils";
 
 export const getMeeting = async ({
   userId,
