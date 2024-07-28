@@ -18,7 +18,7 @@ const config: Config = {
             "--tw-prose-counters": theme("colors.white"),
             "--tw-prose-bullets": theme("colors.white"),
             "--tw-prose-hr": theme("colors.white"),
-            "--tw-prose-links": "#0000EE",
+            "--tw-prose-links": "#959595",
             "--tw-prose-quotes": theme("colors.white"),
             "--tw-prose-quote-borders": theme("colors.white"),
             "--tw-prose-captions": theme("colors.white"),
