@@ -30,7 +30,6 @@ export function MeetingContentsList({
   });
 
   const renderAiComment = (hat: IMeetingRoomHat, idx: number) => {
-    console.log(hat.aiMessageId);
     return (
       <li key={idx} className='max-w-[688px]'>
         <AiComment

@@ -50,7 +50,6 @@ export const fetchAiStream = async ({
         let jsonText = line.substring(5).trim(); // 'data:' 부분을 제거하고 공백을 제거
         try {
           const json = JSON.parse(jsonText);
-          console.log("Received JSON:", json);
         } catch (e) {
           console.error("Error parsing JSON:", e);
         }

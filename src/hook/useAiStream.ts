@@ -237,7 +237,7 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
         }
       } catch (error) {
         if (isStopMeeting[phase].isStop) {
-          console.log("Meeting stopped after error.");
+          console.error("Meeting stopped after error.");
           break;
         }
       }
