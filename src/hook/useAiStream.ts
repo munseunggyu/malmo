@@ -3,7 +3,7 @@ import { getHistory } from "@/services/getHistory";
 import { getMeeting } from "@/services/getMeeting";
 import { IHat } from "@/types/Hat";
 import { IAiMessages } from "@/types/MeetingMessageData";
-import { constants, hatsOrder, roleInfo } from "@/utils";
+import { allHats, constants, hatsOrder, roleInfo } from "@/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 interface IAiStream {
@@ -508,12 +508,17 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
         url = `/meeting/${roomId}?chatPhaseId1=${chatPhaseId1}&chatPhaseId2=${chatPhaseId2}&chatPhaseId3=${chatPhaseId3}&phase=${nowPhase}&isNew=false`;
         router.replace(url);
       }
-      const wow = res.sort((a: { phase: number }, b: { phase: number }) => {
+      res.sort((a: { phase: number }, b: { phase: number }) => {
         return b.phase - a.phase;
       });
-      console.log("wow", wow);
+      const allRole = [...allHats, constants.SUMMARY];
       if (res[0]) {
-        const lastRole = res[0].aiMessages.sort()[0].role;
+        const sortedAiMessages = allRole
+          .map(color =>
+            res[0].aiMessages.find((item: IAiMessages) => item.role === color)
+          )
+          .filter(Boolean);
+        const lastRole = sortedAiMessages[sortedAiMessages.length - 1].role;
         if (lastRole !== constants.SUMMARY) {
           setIsStopMeeting(prev => ({
             ...prev,
@@ -556,7 +561,12 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
         });
       }
       if (res[1]) {
-        const lastRole = res[1].aiMessages[0].role;
+        const sortedAiMessages = allRole
+          .map(color =>
+            res[1].aiMessages.find((item: IAiMessages) => item.role === color)
+          )
+          .filter(Boolean);
+        const lastRole = sortedAiMessages[sortedAiMessages.length - 1].role;
         if (lastRole !== constants.SUMMARY) {
           setIsStopMeeting(prev => ({
             ...prev,
@@ -599,7 +609,12 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
         });
       }
       if (res[2]) {
-        const lastRole = res[2].aiMessages[0].role;
+        const sortedAiMessages = allRole
+          .map(color =>
+            res[2].aiMessages.find((item: IAiMessages) => item.role === color)
+          )
+          .filter(Boolean);
+        const lastRole = sortedAiMessages[sortedAiMessages.length - 1].role;
         if (lastRole !== constants.SUMMARY) {
           setIsStopMeeting(prev => ({
             ...prev,
