@@ -28,11 +28,8 @@ export default function MeetingContents({
   nowIsStop,
   roomId
 }: IProps) {
-  const [isClient, setIsClient] = useState(false);
   const [showBlur, setShowBlur] = useState(true);
   const bottomOfPanelRef = useRef<HTMLDivElement>(null);
-
-  const gptType = useGptType(state => state.gptType);
 
   const stopClick: MouseEventHandler<HTMLUListElement> = e => {
     if (loadingBtn) e.preventDefault();
@@ -44,9 +41,6 @@ export default function MeetingContents({
     delay: 0
   });
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
   useEffect(() => {
     if (inView) {
       setShowBlur(false);
@@ -204,7 +198,6 @@ export default function MeetingContents({
           ></div>
         )}
         <div className='absolute bottom-10 flex flex-col gap-[10px] items-center'>
-          {isClient && <div className='text-[#ffffff33]'>{gptType.name}</div>}
           {chatPhaseId3 === "undefined" && hats[6]?.isFinish && !loadingBtn && (
             <Button
               onClick={handleOpenMoal}
