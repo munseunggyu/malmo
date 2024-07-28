@@ -15,7 +15,7 @@ export const fetchNewMeeting = async ({
   try {
     // 추후 삭제 - 테스트 기간 회의 수 제한
     const historyList = await getHistory(userId);
-    if (historyList.length > 3) {
+    if (historyList.length > 3 && category) {
       alert(
         "테스트 기간 동안 사용자에게 할당된 회의 수가 끝났습니다.\n이용해 주셔서 감사합니다."
       );
