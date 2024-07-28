@@ -3,7 +3,7 @@ import LoginModalBtn from "../_component/LoginModalBtn";
 
 export default async function BeforeLoginView() {
   return (
-    <div className="bg-[url('/first-bg.png')] bg-cover bg-center h-full relative">
+    <div className="bg-[url('/first-bg.webp')] bg-cover bg-center h-full relative">
       <div className='h-full flex flex-col justify-center items-center '>
         <h1 className='text-[60px] text-center'>
           당신의 아이디어를 더욱 빛나게!
