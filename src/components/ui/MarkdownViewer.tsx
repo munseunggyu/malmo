@@ -8,7 +8,15 @@ interface IProps {
 
 export default function MarkdownViewer({ content }: IProps) {
   return (
-    <ReactMarkdown className={"prose prose-white "} remarkPlugins={[remarkGfm]}>
+    <ReactMarkdown
+      className={"prose prose-white "}
+      remarkPlugins={[remarkGfm]}
+      components={{
+        a: ({ node, ...props }) => (
+          <a {...props} target='_blank' rel='noopener noreferrer' />
+        )
+      }}
+    >
       {content}
     </ReactMarkdown>
   );
