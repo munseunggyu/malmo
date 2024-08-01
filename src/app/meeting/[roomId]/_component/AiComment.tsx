@@ -61,6 +61,9 @@ export default function AiComment({
         )}
 
         <div className='flex justify-end gap-x-xs mt-sm'>
+          <button className='px-[12px] py-xs border border-bg-3 rounded-md text-grey-9 hover:bg-[#ffffff1a]'>
+            <span onClick={handleOpenMoal}>추가 회의하기</span>
+          </button>
           <button
             onClick={handleClickBookMark}
             className='px-[12px] py-xs border border-bg-3 rounded-md text-grey-9 hover:bg-[#ffffff1a] flex items-center gap-x-xs'

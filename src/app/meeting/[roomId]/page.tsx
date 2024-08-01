@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import MeetingHeader from "./_component/MeetingHeader";
@@ -40,9 +40,13 @@ export default function MeetingPage({ params }: IProps) {
     phase
   });
 
+  const memoSummaryRoomName = useMemo(() => {
+    return summaryRoomName;
+  }, [summaryRoomName]);
+
   return (
     <div className='h-full'>
-      <MeetingHeader summaryRoomName={summaryRoomName} />
+      <MeetingHeader summaryRoomName={memoSummaryRoomName} />
       <section
         className='flex'
         style={{

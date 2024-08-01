@@ -6,7 +6,7 @@ interface IProps {
   summaryRoomName: string;
 }
 
-export default function MeetingHeader({ summaryRoomName }: IProps) {
+function MeetingHeader({ summaryRoomName }: IProps) {
   const searchParams = useSearchParams();
   const query = Object.fromEntries(searchParams.entries());
   const phase = searchParams.get("phase");
@@ -57,3 +57,5 @@ export default function MeetingHeader({ summaryRoomName }: IProps) {
     </section>
   );
 }
+
+export default React.memo(MeetingHeader);
