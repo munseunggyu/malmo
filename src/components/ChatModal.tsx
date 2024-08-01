@@ -15,13 +15,16 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useGptType } from "@/app/stores/gptType";
 import Image from "next/image";
 import icoArrow from "../../public/ico-arrow.svg";
+
+import styles from "./ChatModal.module.css";
+
 interface IProps {
   handleCloseModal: () => void;
   isFrist?: boolean;
   phase?: undefined | string;
   roomId?: undefined | string;
   chooseMessage?: string;
-  relyAiMessageId?: string;
+  relyAiMessageId?: string | undefined;
   name?: string;
 }
 
@@ -86,6 +89,7 @@ export default function ChatModal({
       message: string;
       userId: string;
       roomId?: number | null;
+      relyAiMessageId?: number | null;
     } = {
       category: selectedOption,
       message,
@@ -101,7 +105,8 @@ export default function ChatModal({
       payload = {
         message,
         userId: user.id,
-        roomId: Number(roomId)
+        roomId: Number(roomId),
+        relyAiMessageId: relyAiMessageId ? Number(relyAiMessageId) : null
       };
     }
     const response = await fetchNewMeeting(payload);
@@ -162,6 +167,29 @@ export default function ChatModal({
                 회의하고 싶은 아이디어를 입력해 주세요.
               </p>
             </>
+          )}
+          {relyAiMessageId && (
+            <div>
+              <div className='flex mb-[36px] bg-[#ffffff1a] px-[20px] py-[12px] rounded-sm text-[#ffffff99] gap-x-xs max-h-[118px]'>
+                <span>{name}:</span>
+                <p
+                  className={`w-[80%] ${styles.scroll_style} ${
+                    openChooseMessage ? " overflow-y-auto" : "truncate"
+                  }`}
+                >
+                  {chooseMessage}
+                </p>
+                <div
+                  onClick={() => setOpenChooseMessage(prev => !prev)}
+                  className='ml-auto cursor-pointer'
+                >
+                  줄이기
+                </div>
+              </div>
+              <h3 className='mt-[36px] mb-sm'>
+                선택한 발언에 영향받은 아이디어를 입력해 주세요.
+              </h3>
+            </div>
           )}
 
           <TextArea
