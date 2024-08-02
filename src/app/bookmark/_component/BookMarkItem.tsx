@@ -5,11 +5,12 @@ import Image from "next/image";
 import icoStar from "../../../../public/ico-star-color.svg";
 import { IBookMark } from "./BookMarksList";
 import MeetingPhaseButton from "@/components/MeetingPhaseButton";
-import { constants, roleInfo } from "@/utils";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { roleInfo } from "@/utils";
+import { useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import MarkdownViewer from "@/components/ui/MarkdownViewer";
 import DelButton from "@/components/ui/DelButton";
+import { useBookMarkMutation } from "@/queries.ts/bookmark";
 
 export default function BookMarkItem({ ...bookMark }: IBookMark) {
   const queryClient = useQueryClient();
@@ -19,31 +20,10 @@ export default function BookMarkItem({ ...bookMark }: IBookMark) {
   const [showDelBtn, setShowDelBtn] = useState(false);
   const roleData = roleInfo(bookMark.role);
 
-  const delBookMark = useMutation({
-    mutationFn: () => {
-      return fetch(constants.apiUrl + `chat/chat/${bookMark.aiMessageId}`, {
-        method: "DELETE",
-        headers: {
-          "user-id": user?.id || ""
-        }
-      });
-    },
-    onSuccess() {
-      const queryCache = queryClient.getQueryCache();
-      const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
-      queryKeys.forEach(queryKey => {
-        if (queryKey[0] === "bookmark") {
-          const bookmarkList = queryClient.getQueryData<IBookMark[]>([
-            "bookmark"
-          ]);
-          const data = bookmarkList?.filter(
-            item => item.aiMessageId !== bookMark.aiMessageId
-          );
-
-          queryClient.setQueryData(["bookmark"], data);
-        }
-      });
-    }
+  const delBookMark = useBookMarkMutation({
+    queryClient,
+    userId: user?.id!,
+    aiMessageId: bookMark.aiMessageId
   });
 
   const handleDel = () => {

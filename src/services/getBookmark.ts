@@ -5,8 +5,7 @@ export const getBookmark = async (userId: string) => {
     method: "GET",
     headers: {
       "user-id": userId
-    },
-    cache: "no-store"
+    }
   });
   const data = await response.json();
 

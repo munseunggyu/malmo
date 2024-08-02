@@ -1,12 +1,9 @@
 import MeetingPhaseButton from "@/components/MeetingPhaseButton";
-import { constants } from "@/utils";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
-import { IHistory } from "./HistoryList";
-import Image from "next/image";
-import icoDel from "../../../../public/ico-delete.svg";
 import DelButton from "@/components/ui/DelButton";
+import { useHistoryMutation } from "@/queries.ts/history";
 
 export default function HistoryItem({ ...history }) {
   const { data: session } = useSession();
@@ -15,27 +12,10 @@ export default function HistoryItem({ ...history }) {
 
   const [showDelBtn, setShowDelBtn] = useState(false);
 
-  const delHistory = useMutation({
-    mutationFn: () => {
-      return fetch(constants.apiUrl + `chat/rooms/${history.id}`, {
-        method: "DELETE",
-        headers: {
-          "user-id": user?.id || ""
-        }
-      });
-    },
-    onSuccess() {
-      const queryCache = queryClient.getQueryCache();
-      const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
-      queryKeys.forEach(queryKey => {
-        if (queryKey[0] === "history") {
-          const historyList = queryClient.getQueryData<IHistory[]>(["history"]);
-          const data = historyList?.filter(item => item.id !== history.id);
-
-          queryClient.setQueryData(["history"], data);
-        }
-      });
-    }
+  const delHistory = useHistoryMutation({
+    userId: user?.id!,
+    historyId: history.id,
+    queryClient
   });
 
   const handleDel = () => {

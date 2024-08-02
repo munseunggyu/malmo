@@ -1,24 +1,27 @@
 "use client";
 
-import MeetingPhaseButton from "@/components/MeetingPhaseButton";
 import NoDataUi from "@/components/NoDataUi";
-import { getHistory } from "@/services/getHistory";
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import HistoryItem from "./HistoryItem";
+import { useHistorykQuery } from "@/queries.ts/history";
+import AiMessageLoading from "@/components/ui/AiMessageLoading";
 
 export interface IHistory {
-  id: string;
+  id: number;
   roomName: string | null;
   phase: number;
 }
 
 export default function HistoryList({ userId }: { userId: string }) {
-  const { data: historyList } = useQuery<IHistory[]>({
-    queryKey: ["history"],
-    queryFn: () => getHistory(userId),
-    staleTime: 0
-  });
+  const { data: historyList, isLoading } = useHistorykQuery(userId);
+
+  if (isLoading) {
+    return (
+      <div className='flex justify-center mt-[250px]'>
+        <AiMessageLoading />
+      </div>
+    );
+  }
 
   if (historyList?.length === 0) {
     return (

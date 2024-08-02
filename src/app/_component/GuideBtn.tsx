@@ -6,6 +6,7 @@ import styles from "./guideBtn.module.css";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { fetchNewMeeting } from "@/services/newMeeting";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface IProps {
   img: StaticImageData;
@@ -15,6 +16,7 @@ interface IProps {
 }
 
 export default function GuideBtn({ img, alt, title, contents }: IProps) {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { data } = useSession();
   const user = data?.user;
@@ -28,6 +30,7 @@ export default function GuideBtn({ img, alt, title, contents }: IProps) {
     });
 
     if (response) {
+      queryClient.invalidateQueries({ queryKey: ["history"] });
       router.push(
         `/meeting/${response.roomId}?chatPhaseId1=${response.chatPhaseId}&phase=1&isNew=true`
       );
