@@ -5,6 +5,7 @@ import { getMeeting } from "@/services/getMeeting";
 import { IHat } from "@/types/Hat";
 import { IAiMessages } from "@/types/MeetingMessageData";
 import { allHats, constants, hatsOrder, roleInfo } from "@/utils";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 interface IAiStream {
@@ -30,6 +31,7 @@ interface IisStopMeeting {
 }
 
 export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
+  const queryClient = useQueryClient();
   const gptType = useGptType(state => state.gptType);
   const changeGptType = useGptType(state => state.changeGptType);
   const router = useRouter();
@@ -476,6 +478,7 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
       }
     );
     const data = await response.json();
+    queryClient.invalidateQueries({ queryKey: ["bookmark"] });
     setSseMeetingData(prev => ({
       ...prev,
       [phase]: {

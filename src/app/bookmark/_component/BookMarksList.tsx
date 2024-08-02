@@ -20,7 +20,8 @@ export interface IBookMark {
 export default function BookMarksList({ userId }: { userId: string }) {
   const { data: bookmarkList } = useQuery<IBookMark[]>({
     queryKey: ["bookmark"],
-    queryFn: () => getBookmark(userId || "")
+    queryFn: () => getBookmark(userId || ""),
+    staleTime: 1000 * 60 * 5
   });
 
   if (bookmarkList?.length === 0) {
