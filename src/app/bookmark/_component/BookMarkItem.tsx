@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import Image from "next/image";
 
 import icoStar from "../../../../public/ico-star-color.svg";
-import icoDel from "../../../../public/ico-delete.svg";
 import { IBookMark } from "./BookMarksList";
 import MeetingPhaseButton from "@/components/MeetingPhaseButton";
 import { constants, roleInfo } from "@/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import MarkdownViewer from "@/components/ui/MarkdownViewer";
+import DelButton from "@/components/ui/DelButton";
 
 export default function BookMarkItem({ ...bookMark }: IBookMark) {
   const queryClient = useQueryClient();
@@ -46,6 +46,10 @@ export default function BookMarkItem({ ...bookMark }: IBookMark) {
     }
   });
 
+  const handleDel = () => {
+    delBookMark.mutate();
+  };
+
   return (
     <div className='max-w-[940px]'>
       <Image src={icoStar} alt='북마크' width={24} height={24} />
@@ -70,15 +74,7 @@ export default function BookMarkItem({ ...bookMark }: IBookMark) {
               }`}
               onClick={() => setShowDelBtn(prev => !prev)}
             />
-            {showDelBtn && (
-              <button
-                className='absolute top-[-60px] right-[-132px] flex items-center gap-x-[10px] bg-[#2D2D2F] border border-[#ffffff1a] caption1 w-[176px] py-[12px] rounded-sm text-start px-[16px] text-error-2'
-                onClick={() => delBookMark.mutate()}
-              >
-                <Image src={icoDel} width={24} height={24} alt='로그아웃' />{" "}
-                삭제하기
-              </button>
-            )}
+            {showDelBtn && <DelButton left={2} handleClick={handleDel} />}
           </div>
         </div>
         <div className='border-t border-t-[#ffffff66] pt-[20px] flex '>
