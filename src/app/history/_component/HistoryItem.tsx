@@ -1,11 +1,12 @@
 import MeetingPhaseButton from "@/components/MeetingPhaseButton";
-import { constants, roleInfo } from "@/utils";
+import { constants } from "@/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { IHistory } from "./HistoryList";
 import Image from "next/image";
 import icoDel from "../../../../public/ico-delete.svg";
+import DelButton from "@/components/ui/DelButton";
 
 export default function HistoryItem({ ...history }) {
   const { data: session } = useSession();
@@ -13,7 +14,6 @@ export default function HistoryItem({ ...history }) {
   const queryClient = useQueryClient();
 
   const [showDelBtn, setShowDelBtn] = useState(false);
-  const roleData = roleInfo(history.role);
 
   const delHistory = useMutation({
     mutationFn: () => {
@@ -37,6 +37,11 @@ export default function HistoryItem({ ...history }) {
       });
     }
   });
+
+  const handleDel = () => {
+    delHistory.mutate();
+  };
+
   return (
     <>
       <p className='max-w-[830px] w-full truncate'>{history.roomName || "-"}</p>
@@ -62,15 +67,7 @@ export default function HistoryItem({ ...history }) {
           }`}
           onClick={() => setShowDelBtn(prev => !prev)}
         />
-        {showDelBtn && (
-          <button
-            className='absolute top-[-65px] right-0 flex items-center gap-x-[10px] bg-[#2D2D2F] border border-[#ffffff1a] caption1 w-[176px] py-[12px] rounded-sm text-start px-[16px] text-error-2'
-            onClick={() => delHistory.mutate()}
-          >
-            <Image src={icoDel} width={24} height={24} alt='로그아웃' />{" "}
-            삭제하기
-          </button>
-        )}
+        {showDelBtn && <DelButton left={-82} handleClick={handleDel} />}
       </div>
     </>
   );
