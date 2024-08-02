@@ -30,8 +30,8 @@ export default function Navbar() {
     });
   };
   return (
-    <nav className='fixed flex flex-col bg-[#4f4f4f] h-full py-[20px] px-[10px] items-center'>
-      <ul className='flex flex-col items-center '>
+    <nav className='fixed flex flex-col bg-[#4f4f4f] h-full py-[20px] px-[4px] items-center'>
+      <ul className='flex flex-col items-center px-[4px]'>
         <li>
           <Link href={"/"}>
             <Image src={mainLogo} alt='말모말모' width={56} height={56} />
@@ -45,20 +45,20 @@ export default function Navbar() {
         <li className='pt-[20px] h-[64px] mb-2'>
           <Link
             href={"/bookmark"}
-            className={` block w-[26px] h-[26px]  hover:bg-[url('/hoverStarImg.png')] hover:my-0 hover:w-[48px] hover:h-[48px] bg-cover bg-center ${
+            className={` block w-[24px] h-[24px]  hover:bg-[url('/hoverStarImg.png')] hover:my-0 hover:w-[44px] hover:h-[44px] bg-cover bg-center ${
               segment === "bookmark"
-                ? "w-[48px] h-[48px] bg-[url('/activeStarImg.png')] "
-                : "bg-[url('/ico-star.svg')] my-[11px]"
+                ? "w-[44px] h-[44px] bg-[url('/activeStarImg.png')] "
+                : "bg-[url('/ico-star.svg')] my-[10px]"
             }`}
           ></Link>
         </li>
         <li className='pt-[20px]  h-[48px]'>
           <Link
             href={"/history"}
-            className={`block w-[26px] h-[26px]  hover:bg-[url('/hoverHistoryImg.png')] hover:my-0 hover:w-[48px] hover:h-[48px] bg-cover bg-center ${
+            className={`block w-[24px] h-[24px]  hover:bg-[url('/hoverHistoryImg.png')] hover:my-0 hover:w-[44px] hover:h-[44px] bg-cover bg-center ${
               segment === "history"
-                ? "w-[48px] h-[48px] bg-[url('/activeHistoryImg.png')] my-0"
-                : "bg-[url('/ico-historyfile.svg')] my-[11px] "
+                ? "w-[44px] h-[44px] bg-[url('/activeHistoryImg.png')] my-0"
+                : "bg-[url('/ico-historyfile.svg')] my-[10px] "
             }`}
           ></Link>
         </li>
@@ -67,14 +67,17 @@ export default function Navbar() {
         {showSetting && (
           <button
             onClick={handleSignOut}
-            className='absolute top-[-70px] right-[-140px] flex items-center gap-x-[10px] bg-[#2D2D2F] border border-[#ffffff1a] caption1 w-[176px] py-[12px] rounded-sm text-start px-[16px]'
+            className='absolute top-[-57px] right-[-93px] flex items-center gap-x-[10px] bg-[#2D2D2F] border border-[#ffffff1a]   py-[12px] rounded-sm text-start px-[16px] hover:opacity-[0.8] text-[14px]'
           >
             <Image src={moveItem} width={24} height={24} alt='로그아웃' />{" "}
             로그아웃
           </button>
         )}
-        <button onClick={() => setShowSetting(prev => !prev)}>
-          <Image src={icoSetting} width={32} height={32} alt='설정' />
+        <button
+          onClick={() => setShowSetting(prev => !prev)}
+          className='opacity-[0.6] hover:opacity-[1]'
+        >
+          <Image src={icoSetting} width={24} height={24} alt='설정' />
         </button>
       </div>
       {openModal && (
