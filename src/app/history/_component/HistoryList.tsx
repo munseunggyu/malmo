@@ -17,7 +17,7 @@ export default function HistoryList({ userId }: { userId: string }) {
   const { data: historyList } = useQuery<IHistory[]>({
     queryKey: ["history"],
     queryFn: () => getHistory(userId),
-    staleTime: 0
+    staleTime: 1000 * 60 * 5
   });
 
   if (historyList?.length === 0) {

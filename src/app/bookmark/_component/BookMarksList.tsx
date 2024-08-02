@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { IHat } from "@/types/Hat";
 import NoDataUi from "@/components/NoDataUi";
 
 import BookMarkItem from "./BookMarkItem";
-import { getBookmark } from "@/services/getBookmark";
+import { useBookMarkQuery } from "@/queries.ts/bookmark";
+import AiMessageLoading from "@/components/ui/AiMessageLoading";
 
 export interface IBookMark {
   aiMessageId: number;
@@ -18,11 +18,15 @@ export interface IBookMark {
 }
 
 export default function BookMarksList({ userId }: { userId: string }) {
-  const { data: bookmarkList } = useQuery<IBookMark[]>({
-    queryKey: ["bookmark"],
-    queryFn: () => getBookmark(userId || ""),
-    staleTime: 1000 * 60 * 5
-  });
+  const { data: bookmarkList, isLoading } = useBookMarkQuery(userId);
+
+  if (isLoading) {
+    return (
+      <div className='flex justify-center mt-[250px]'>
+        <AiMessageLoading />
+      </div>
+    );
+  }
 
   if (bookmarkList?.length === 0) {
     return (
