@@ -17,6 +17,7 @@ import Image from "next/image";
 import icoArrow from "../../public/ico-arrow.svg";
 
 import styles from "./ChatModal.module.css";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface IProps {
   handleCloseModal: () => void;
@@ -37,6 +38,7 @@ export default function ChatModal({
   chooseMessage,
   name
 }: IProps) {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { data } = useSession();
   const user = data?.user;
@@ -112,7 +114,8 @@ export default function ChatModal({
     const response = await fetchNewMeeting(payload);
 
     if (response) {
-      let url = "";
+      queryClient.invalidateQueries({ queryKey: ["history"] });
+
       if (isFrist) {
         router.push(
           `/meeting/${response.roomId}?chatPhaseId1=${response.chatPhaseId}&phase=1&isNew=true`
