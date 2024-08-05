@@ -31,7 +31,7 @@ export function MeetingContentsList({
 
   const renderAiComment = (hat: IMeetingRoomHat, idx: number) => {
     return (
-      <li key={idx} className='max-w-[688px]'>
+      <li key={idx} className='max-w-[688px] w-full  mx-auto'>
         <AiComment
           messages={hat.message}
           bookmarked={hat.bookmarked}
@@ -74,7 +74,7 @@ export function MeetingContentsList({
   return (
     <>
       <ul
-        className='flex flex-col gap-y-[12px] h-[75%] overflow-scroll'
+        className='flex flex-col gap-y-[12px] h-[75%] overflow-scroll w-full'
         onClick={stopClick}
       >
         {renderHats()}

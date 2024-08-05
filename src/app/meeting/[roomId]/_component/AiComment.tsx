@@ -11,6 +11,7 @@ import { useSearchParams } from "next/navigation";
 import starImg from "../../../../../public/ico-star.svg";
 import starColorImg from "../../../../../public/ico-star-color.svg";
 import MarkdownViewer from "@/components/ui/MarkdownViewer";
+import SkeletonUi from "@/components/ui/SkeletonUi";
 
 interface IProps extends IHatInfo {
   messages: string;
@@ -39,13 +40,13 @@ export default function AiComment({
     handleBookmark(aiMessageId);
   };
   return (
-    <div className='flex gap-x-sm '>
+    <div className='flex gap-x-sm  w-full'>
       <Image
         src={img}
         alt={name}
         className='bg-blue-500 w-[50px] h-[50px] rounded-[50%]'
       />
-      <div>
+      <div className='w-full'>
         <span>
           {name} | {thought}
         </span>
@@ -55,9 +56,10 @@ export default function AiComment({
         {messages.length > 0 ? (
           <MarkdownViewer content={messages}></MarkdownViewer>
         ) : (
-          <p className='whitespace-pre-wrap break-keep font-[400] w-[620px] mx-auto flex justify-center'>
-            <AiMessageLoading />
-          </p>
+          <>
+            <SkeletonUi />
+            <SkeletonUi className='w-[65%]' />
+          </>
         )}
 
         <div className='flex justify-end gap-x-xs mt-sm'>
