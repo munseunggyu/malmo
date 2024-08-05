@@ -106,20 +106,6 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
     // 응답을 스트림으로 처리
     if (response.status !== 200) {
       if (roleType !== "title") {
-        alert(
-          `답변 생생 도중 오류가 발생하였습니다.\n회의를 계속하고 싶다면 아래 ‘답변 재생성하기' 버튼을 눌러주세요.`
-        );
-        setIsStopMeeting(prev => {
-          return {
-            ...prev,
-            [phase]: {
-              ...prev[phase],
-              isStop: true,
-              lastRole: role
-            }
-          };
-        });
-        setLoadingBtn(false);
         return "isFail";
       }
     }
@@ -226,16 +212,24 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
         gptType: "OPEN_AI"
       });
     }
+    let nowGptType = gptType.value;
     for (let i = 0; i < sseMeetingData[phase].aiMessages.length; i++) {
       try {
         const res = await fetchAiStream({
           role: sseMeetingData[phase].aiMessages[i].role,
           chatPhaseId,
           roleType: "hats",
-          gptType: gptType.value
+          gptType: nowGptType
         });
         if (res === "isFail") {
-          return;
+          nowGptType = "OPEN_AI";
+          changeGptType("OPEN_AI");
+          const res = await fetchAiStream({
+            role: sseMeetingData[phase].aiMessages[i].role,
+            chatPhaseId,
+            roleType: "hats",
+            gptType: "OPEN_AI"
+          });
         }
       } catch (error) {
         if (isStopMeeting[phase].isStop) {
