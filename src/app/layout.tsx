@@ -47,7 +47,7 @@ export default async function RootLayout({
           <AuthSession>
             <div className='flex relative h-full'>
               {user && <Navbar />}
-              <main className={`w-full ${user ? "pl-[72px]" : ""}`}>
+              <main className={`w-full ${user ? "pl-[64px]" : ""}`}>
                 {children}
               </main>
             </div>

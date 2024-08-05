@@ -1,4 +1,5 @@
-import AiMessageLoading from "@/components/ui/AiMessageLoading";
+"use client";
+
 import Image from "next/image";
 import React from "react";
 import { IHatInfo } from "../type/MeetingRoomHat";
@@ -11,6 +12,8 @@ import { useSearchParams } from "next/navigation";
 import starImg from "../../../../../public/ico-star.svg";
 import starColorImg from "../../../../../public/ico-star-color.svg";
 import MarkdownViewer from "@/components/ui/MarkdownViewer";
+import SkeletonUi from "@/components/ui/SkeletonUi";
+import toast, { Toaster } from "react-hot-toast";
 
 interface IProps extends IHatInfo {
   messages: string;
@@ -36,16 +39,21 @@ export default function AiComment({
   const phase = ((searchParams.get("phase") || "1") as "1") || "2" || "3";
   const handleClickBookMark = () => {
     if (!aiMessageId) return;
+    let comment = bookmarked
+      ? "해당 발언 저장을 취소하였습니다."
+      : "해당 발언을 저장하였습니다.";
+
+    toast(comment);
     handleBookmark(aiMessageId);
   };
   return (
-    <div className='flex gap-x-sm '>
+    <div className='flex gap-x-sm  w-full'>
       <Image
         src={img}
         alt={name}
         className='bg-blue-500 w-[50px] h-[50px] rounded-[50%]'
       />
-      <div>
+      <div className='w-full'>
         <span>
           {name} | {thought}
         </span>
@@ -55,9 +63,10 @@ export default function AiComment({
         {messages.length > 0 ? (
           <MarkdownViewer content={messages}></MarkdownViewer>
         ) : (
-          <p className='whitespace-pre-wrap break-keep font-[400] w-[620px] mx-auto flex justify-center'>
-            <AiMessageLoading />
-          </p>
+          <>
+            <SkeletonUi />
+            <SkeletonUi className='w-[65%]' />
+          </>
         )}
 
         <div className='flex justify-end gap-x-xs mt-sm'>
@@ -92,6 +101,17 @@ export default function AiComment({
           </ModalContainer>
         </ModalPortal>
       )}
+      <Toaster
+        position='bottom-center'
+        toastOptions={{
+          style: {
+            color: "rgba(255, 255, 255, 0.60)",
+            background:
+              "linear-gradient(0deg, rgba(255, 255, 255, 0.10)0%, rgba(255, 255, 255, 0.10)100%), #2B2C22",
+            minWidth: "500px"
+          }
+        }}
+      />
     </div>
   );
 }
