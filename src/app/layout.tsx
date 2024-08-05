@@ -5,6 +5,7 @@ import AuthSession from "@/providers/AuthSession";
 import Navbar from "@/components/Navbar";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
+import Analytics from "@/components/Analytics";
 
 export const metadata: Metadata = {
   title: "말모말모",
@@ -42,6 +43,9 @@ export default async function RootLayout({
 
   return (
     <html lang='en'>
+      <head>
+        <Analytics />
+      </head>
       <body>
         <RQProvider>
           <AuthSession>
