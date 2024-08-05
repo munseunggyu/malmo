@@ -10,10 +10,13 @@ import blue from "../../../public/carousel/blue.png";
 import yellow from "../../../public/carousel/yellow.png";
 import white from "../../../public/carousel/white.png";
 import Image from "next/image";
+import Button from "@/components/ui/Button";
+import ModalPortal from "@/components/ui/ModalPortal";
+import ModalContainer from "@/components/ui/ModalContainer";
+import ChatModal from "@/components/ChatModal";
+import { useModal } from "@/hook/useModal";
 
 export default function LoginAfterFirstView() {
-  const link =
-    "https://daisy-hacksaw-0a3.notion.site/60055e40a24e4b749d580c9b7ec71457";
   const carouselData = [
     {
       img: green,
@@ -46,6 +49,7 @@ export default function LoginAfterFirstView() {
       name: "white"
     }
   ];
+  const { openModal, handleCloseModal, handleOpenMoal } = useModal();
   return (
     <div className='mx-auto flex flex-col items-center justify-center h-full'>
       <h2 className='title1 leading-[130%] mb-xs'>
@@ -76,6 +80,16 @@ export default function LoginAfterFirstView() {
           ))}
         </CarouselUi>
       </div>
+      <Button onClick={handleOpenMoal} classNames='mt-[40px]'>
+        모자와 회의 하러가기 →
+      </Button>
+      {openModal && (
+        <ModalPortal>
+          <ModalContainer handleCloseModal={handleCloseModal}>
+            <ChatModal handleCloseModal={handleCloseModal} isFrist={true} />
+          </ModalContainer>
+        </ModalPortal>
+      )}
     </div>
   );
 }
