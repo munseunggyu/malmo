@@ -34,7 +34,7 @@ export default function Navbar() {
       <ul className='flex flex-col items-center px-[4px]'>
         <li>
           <Link href={"/"}>
-            <Image src={mainLogo} alt='말모말모' width={56} height={56} />
+            <Image src={mainLogo} alt='말모말모' width={48} height={48} />
           </Link>
         </li>
         <li className='pt-[24px] hover:opacity-[0.8]'>
