@@ -52,10 +52,10 @@ export default function LoginAfterFirstView() {
   const { openModal, handleCloseModal, handleOpenMoal } = useModal();
   return (
     <div className='mx-auto flex flex-col items-center justify-center h-full'>
-      <h2 className='title1 leading-[130%] mb-xs'>
+      <h2 className='title1 leading-[130%] mb-xs w-[669px] text-left'>
         당신의 아이디어를 더욱 빛나게!
       </h2>
-      <p className='body1 leading-[130%] mb-[36px]'>
+      <p className='body1 leading-[130%] mb-[36px] w-[669px] text-left'>
         브레인 스토밍을 돕는 여섯 모자들과 함께 아이디어를 확장시켜봐요!
       </p>
       <div className='flex gap-x-[12px]'>

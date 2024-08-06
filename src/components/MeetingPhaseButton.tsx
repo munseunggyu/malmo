@@ -35,7 +35,7 @@ export default function MeetingPhaseButton({
   return (
     <Link
       href={newUrl}
-      className={`px-[20px] py-[12px] rounded-sm border ${
+      className={`px-[16px] py-[8px] rounded-sm border font-[500] ${
         isOn
           ? "bg-[#dffc1c33] border-[#DFFC1C]"
           : "bg-[#ffffff1a] border-[#ffffff33] text-[#ffffff66]"

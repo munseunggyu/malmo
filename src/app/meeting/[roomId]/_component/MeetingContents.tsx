@@ -33,7 +33,7 @@ export default function MeetingContents({
         flex: 274
       }}
     >
-      <h3 className='border border-divider-1 border-r-0 px-[68px] py-[24px] subtitle1'>
+      <h3 className='border border-divider-1 border-r-0 px-[68px] py-[16px] title3'>
         회의 공간
       </h3>
       <section

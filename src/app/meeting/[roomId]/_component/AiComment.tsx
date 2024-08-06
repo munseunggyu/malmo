@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IHatInfo } from "../type/MeetingRoomHat";
 import { useModal } from "@/hook/useModal";
 import ModalPortal from "@/components/ui/ModalPortal";
@@ -9,11 +9,16 @@ import ModalContainer from "@/components/ui/ModalContainer";
 import ChatModal from "@/components/ChatModal";
 import { useSearchParams } from "next/navigation";
 
-import starImg from "../../../../../public/ico-star.svg";
+import starImg from "../../../../../public/ico-star-gray.svg";
+import starWhiteImg from "../../../../../public/ico-star-white.svg";
 import starColorImg from "../../../../../public/ico-star-color.svg";
+import icoCopyImg from "../../../../../public/ico-copy.svg";
+import icoCopyWhiteImg from "../../../../../public/ico-copy-white.svg";
+import icoPlus from "../../../../../public/ico-plus.svg";
 import MarkdownViewer from "@/components/ui/MarkdownViewer";
 import SkeletonUi from "@/components/ui/SkeletonUi";
 import toast, { Toaster } from "react-hot-toast";
+import BubbleUi from "@/components/ui/BubbleUi";
 
 interface IProps extends IHatInfo {
   messages: string;
@@ -43,15 +48,58 @@ export default function AiComment({
       ? "해당 발언 저장을 취소하였습니다."
       : "해당 발언을 저장하였습니다.";
 
-    toast(comment);
+    toast(comment, { duration: 1000 });
     handleBookmark(aiMessageId);
   };
+
+  const handleCopy = () => {
+    toast("해당 발언을 복사하였습니다.", { duration: 1000 });
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(messages);
+    }
+  };
+
+  const [bookMarkImg, setBookMarkImg] = useState(starImg);
+  const [bookMarkBubble, setBookMarkBubble] = useState(false);
+
+  const changeBookMarkImg = (type: number) => {
+    if (type === 1) {
+      setBookMarkBubble(true);
+    } else {
+      setBookMarkBubble(false);
+    }
+    if (bookmarked) return;
+    // 1
+    if (type === 1) {
+      setBookMarkImg(starWhiteImg);
+    } else {
+      setBookMarkImg(starImg);
+    }
+  };
+  const [copyImg, setCopyImg] = useState(icoCopyImg);
+
+  const changeCopyImg = (type: number) => {
+    if (type === 1) {
+      setCopyImg(icoCopyWhiteImg);
+    } else {
+      setCopyImg(icoCopyImg);
+    }
+  };
+
+  useEffect(() => {
+    if (bookmarked) {
+      setBookMarkImg(starColorImg);
+    } else {
+      setBookMarkImg(starImg);
+    }
+  }, [bookmarked]);
+
   return (
     <div className='flex gap-x-sm  w-full'>
       <Image
         src={img}
         alt={name}
-        className='bg-blue-500 w-[50px] h-[50px] rounded-[50%]'
+        className='bg-blue-500 w-[44px] h-[44px] rounded-[50%]'
       />
       <div className='w-full'>
         <span>
@@ -69,21 +117,47 @@ export default function AiComment({
           </>
         )}
 
-        <div className='flex justify-end gap-x-xs mt-sm'>
-          <button className='px-[12px] py-xs border border-bg-3 rounded-md text-grey-9 hover:bg-[#ffffff1a]'>
-            <span onClick={handleOpenMoal}>추가 회의하기</span>
-          </button>
+        <div className='flex justify-between items-center gap-x-[10px] mt-sm'>
+          <div className='flex items-center'>
+            <button
+              onClick={handleCopy}
+              className='rounded-full text-grey-9   box-border bg-inherit hover:bg-[#ffffff1a] relative'
+              onMouseEnter={() => {
+                changeCopyImg(1);
+              }}
+              onMouseLeave={() => {
+                changeCopyImg(2);
+              }}
+            >
+              <Image src={copyImg} width={24} height={24} alt='북마크' />
+              {copyImg === icoCopyWhiteImg && (
+                <BubbleUi className='w-[58px] left-[-18px]'>복사하기</BubbleUi>
+              )}
+            </button>
+            <button
+              onClick={handleClickBookMark}
+              className='rounded-full text-grey-9  p-[4px] w-[24px] h-[24px] box-border bg-inherit hover:bg-[#ffffff1a] relative'
+              onMouseEnter={() => {
+                changeBookMarkImg(1);
+              }}
+              onMouseLeave={() => {
+                changeBookMarkImg(2);
+              }}
+            >
+              <Image src={bookMarkImg} width={16} height={16} alt='북마크' />
+              {bookMarkBubble && (
+                <BubbleUi className='w-[82px] left-[-28px]'>
+                  인사이트 저장
+                </BubbleUi>
+              )}
+            </button>
+          </div>
           <button
-            onClick={handleClickBookMark}
-            className='px-[12px] py-xs border border-bg-3 rounded-md text-grey-9 hover:bg-[#ffffff1a] flex items-center gap-x-xs'
+            className='px-[12px] py-xs  opacity-[0.6] hover:opacity-[1] rounded-md text-[14px] flex justify-center items-center gap-2  border border-[#0b1014] hover:border-main'
+            onClick={handleOpenMoal}
           >
-            <Image
-              src={bookmarked ? starColorImg : starImg}
-              width={20}
-              height={20}
-              alt='북마크'
-            />{" "}
-            저장하기
+            <span className='relative top-[1px]'>추가 회의하기</span>
+            <Image src={icoPlus} alt='추가 회의하기' width={14} height={14} />
           </button>
         </div>
       </div>
