@@ -1,6 +1,6 @@
 .guide_btn {
   display: flex;
-  background-color: #4f4f4f;
+  background-color: #222527;
   border-radius: 16px;
   padding: 28px 24px;
   box-sizing: border-box;
@@ -12,10 +12,5 @@
 }
 .guide_btn:hover {
   border: 1px solid #dffc1c;
-  background: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.4) 0%,
-      rgba(0, 0, 0, 0.4) 100%
-    ),
-    #4f4f4f;
+  background: #141617;
 }
