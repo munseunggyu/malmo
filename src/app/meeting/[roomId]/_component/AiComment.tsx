@@ -99,7 +99,7 @@ export default function AiComment({
       <Image
         src={img}
         alt={name}
-        className='bg-blue-500 w-[50px] h-[50px] rounded-[50%]'
+        className='bg-blue-500 w-[44px] h-[44px] rounded-[50%]'
       />
       <div className='w-full'>
         <span>
