@@ -30,7 +30,7 @@ export default function Navbar() {
     });
   };
   return (
-    <nav className='fixed flex flex-col bg-[#4f4f4f] h-full py-[20px] px-[4px] items-center'>
+    <nav className='fixed flex flex-col bg-divider-1 h-full py-[20px] px-[4px] items-center'>
       <ul className='flex flex-col items-center px-[4px]'>
         <li>
           <Link href={"/"}>

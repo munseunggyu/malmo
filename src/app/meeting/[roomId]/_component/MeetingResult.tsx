@@ -20,7 +20,7 @@ export default function MeetingResult({
         height: "calc(100% - 100px)"
       }}
     >
-      <h3 className='border border-divider-1 border-x-0 px-[68px] py-[24px] subtitle1'>
+      <h3 className='border border-divider-1 border-x-0 px-[68px] py-[16px] title3'>
         회의 결과
       </h3>
       <section className='px-[40px] py-[20px] h-full'>
