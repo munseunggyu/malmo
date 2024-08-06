@@ -186,7 +186,7 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
                   [phase]: {
                     ...prev[phase],
                     summary: {
-                      message: json.message,
+                      message: prev[phase].summary.message + json.message,
                       isLoading: false
                     }
                   }
