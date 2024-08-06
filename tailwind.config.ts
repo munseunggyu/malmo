@@ -77,7 +77,7 @@ const config: Config = {
           3: "#4F4F4F"
         },
         divider: {
-          1: "#424242"
+          1: "#222527"
         }
       },
       spacing: {
