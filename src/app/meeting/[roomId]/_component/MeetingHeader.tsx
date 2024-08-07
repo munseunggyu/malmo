@@ -14,7 +14,7 @@ function MeetingHeader({ summaryRoomName }: IProps) {
   const chatPhaseId3 = searchParams.get("chatPhaseId3");
 
   return (
-    <section className='flex items-center gap-[40px] px-[68px] py-[20px]'>
+    <section className='flex items-center gap-[40px] px-[60px] py-[18.5px]'>
       <h2 className='title3 truncate max-w-[500px]'>{summaryRoomName}</h2>
       <ul className='flex gap-xs'>
         <li>

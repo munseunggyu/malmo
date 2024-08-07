@@ -30,16 +30,17 @@ export default function MeetingContents({
     <section
       className='border border-r-divider-1 border-l-0 border-y-0 relative'
       style={{
-        flex: 274
+        flex: 274,
+        height: "100%"
       }}
     >
-      <h3 className='border border-divider-1 border-r-0 px-[68px] py-[16px] title3'>
+      <h3 className='border border-divider-1 border-r-0 px-[60px] py-[18px] title3'>
         회의 공간
       </h3>
       <section
         className='pt-[40px] flex flex-col items-center'
         style={{
-          height: "calc(100% - 80px)"
+          height: "calc(100% - 60px)"
         }}
       >
         <MeetingContentsList

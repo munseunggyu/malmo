@@ -50,7 +50,7 @@ export default function MeetingPage({ params }: IProps) {
       <section
         className='flex'
         style={{
-          height: "calc(100% - 72px)"
+          height: "calc(100% - 68px)"
         }}
       >
         <MeetingContents

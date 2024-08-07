@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
-import icoNew from "../../public/ico-new.svg";
+import icoNew from "../../public/ico-new.png";
 import moveItem from "../../public/moveItem.svg";
 import icoSetting from "../../public/ico-settings.svg";
 import mainLogo from "../../public/logo-malmo.png";
@@ -17,6 +17,7 @@ import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 export default function Navbar() {
   const router = useRouter();
   const { openModal, handleCloseModal, handleOpenMoal } = useModal();
+
   const [showSetting, setShowSetting] = useState(false);
 
   const segment = useSelectedLayoutSegment();
@@ -37,25 +38,25 @@ export default function Navbar() {
             <Image src={mainLogo} alt='말모말모' width={48} height={48} />
           </Link>
         </li>
-        <li className='pt-[24px] hover:opacity-[0.8]'>
+        <li className='pt-[24px] hover:opacity-[0.8] relative'>
           <button onClick={handleOpenMoal}>
             <Image src={icoNew} width={48} height={48} alt='채팅 방 추가' />
           </button>
         </li>
-        <li className='pt-[20px] h-[64px] mb-2'>
+        <li className='pt-[20px] h-[64px] mb-2 '>
           <Link
             href={"/bookmark"}
-            className={` block w-[24px] h-[24px]  hover:bg-[url('/hoverStarImg.png')] hover:my-0 hover:w-[44px] hover:h-[44px] bg-cover bg-center ${
+            className={` block w-[24px] h-[24px]  hover:bg-[url('/hoverStarImg.png')] hover:my-0 hover:w-[44px] hover:h-[44px] bg-cover bg-center relative ${
               segment === "bookmark"
                 ? "w-[44px] h-[44px] bg-[url('/activeStarImg.png')] "
                 : "bg-[url('/ico-star.svg')] my-[10px]"
             }`}
           ></Link>
         </li>
-        <li className='pt-[20px]  h-[48px]'>
+        <li className='pt-[20px]  h-[48px] '>
           <Link
             href={"/history"}
-            className={`block w-[24px] h-[24px]  hover:bg-[url('/hoverHistoryImg.png')] hover:my-0 hover:w-[44px] hover:h-[44px] bg-cover bg-center ${
+            className={`block w-[24px] h-[24px]  hover:bg-[url('/hoverHistoryImg.png')] hover:my-0 hover:w-[44px] hover:h-[44px] bg-cover bg-center relative ${
               segment === "history"
                 ? "w-[44px] h-[44px] bg-[url('/activeHistoryImg.png')] my-0"
                 : "bg-[url('/ico-historyfile.svg')] my-[10px] "
