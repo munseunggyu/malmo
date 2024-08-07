@@ -34,7 +34,7 @@ export default function MeetingContents({
         height: "100%"
       }}
     >
-      <h3 className='border border-divider-1 border-r-0 px-[60px] py-[18px] title3'>
+      <h3 className='border border-divider-1 border-r-0 border-l-0 px-[60px] py-[18px] title3'>
         회의 공간
       </h3>
       <section

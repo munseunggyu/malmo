@@ -12,7 +12,7 @@ export default async function BookmarkPage() {
   }
   return (
     <div>
-      <h1 className='py-[24px] px-[68px] text-[20px] font-[600] border-b border-b-bg-3'>
+      <h1 className='py-[24px] px-[68px] text-[20px] font-[600] border-b border-b-divider-1'>
         저장 공간
       </h1>
       <BookMarksList userId={user.id} />

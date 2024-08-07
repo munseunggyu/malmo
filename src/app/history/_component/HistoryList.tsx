@@ -41,7 +41,7 @@ export default function HistoryList({ userId }: { userId: string }) {
           historyList.map(history => (
             <li
               key={history.id}
-              className='flex py-[20px] border-b border-b-bg-3 items-center'
+              className='flex py-[20px] border-b border-b-divider-1 items-center'
             >
               <HistoryItem {...history} />
             </li>

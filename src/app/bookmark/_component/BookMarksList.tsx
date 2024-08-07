@@ -43,7 +43,7 @@ export default function BookMarksList({ userId }: { userId: string }) {
       <span className='text-[#ffffff99]'>최신순</span>
       <ul className='mt-sm flex flex-col items-center gap-lg'>
         {bookmarkList?.map(bookMark => (
-          <li key={bookMark.aiMessageId}>
+          <li key={bookMark.aiMessageId} className='w-full'>
             <BookMarkItem {...bookMark} />
           </li>
         ))}
