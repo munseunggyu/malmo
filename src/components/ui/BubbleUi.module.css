@@ -23,18 +23,8 @@
 }
 
 .black {
-  background: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.2) 0%,
-      rgba(0, 0, 0, 0.2) 100%
-    ),
-    #222527;
+  background: #1b1e1f;
 }
 .black::after {
-  border-bottom-color: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.2) 0%,
-      rgba(0, 0, 0, 0.2) 100%
-    ),
-    #222527;
+  border-bottom-color: #1b1e1f;
 }
