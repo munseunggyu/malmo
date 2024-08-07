@@ -41,7 +41,7 @@ export default function MeetingResult({
               <AiMessageLoading size={225} className='mb-[83px] mt-[74px]' />
             )}
 
-            <p className='subtitle1 text-center text-[#ffffff66] relative top-[-30px'>
+            <p className='text-[18px] font-[600] text-center text-[#ffffff66] relative '>
               회의가 끝나면
               <br />
               결과를 한 눈에 요약해 드려요!

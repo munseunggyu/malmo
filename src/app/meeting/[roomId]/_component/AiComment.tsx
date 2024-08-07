@@ -117,8 +117,8 @@ export default function AiComment({
           </>
         )}
 
-        <div className='flex justify-between items-center gap-x-[10px] mt-sm'>
-          <div className='flex items-center'>
+        <div className='flex justify-between items-center  mt-sm'>
+          <div className='flex items-center gap-x-[10px]'>
             <button
               onClick={handleCopy}
               className='rounded-full text-grey-9   box-border bg-inherit hover:bg-[#ffffff1a] relative'
