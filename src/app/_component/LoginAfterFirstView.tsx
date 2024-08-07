@@ -80,7 +80,10 @@ export default function LoginAfterFirstView() {
           ))}
         </CarouselUi>
       </div>
-      <Button onClick={handleOpenMoal} classNames='mt-[40px]'>
+      <Button
+        onClick={handleOpenMoal}
+        classNames='mt-[40px] hover:bg-[#B2CA16]'
+      >
         모자와 회의 하러가기 →
       </Button>
       {openModal && (

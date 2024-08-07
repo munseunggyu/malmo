@@ -72,7 +72,7 @@ export default function Navbar() {
           )}
         </li>
         <li
-          className='pt-[20px] h-[64px] mb-2 '
+          className='pt-[20px] h-[64px]'
           onMouseEnter={handleInsightMouseEnter}
           onMouseLeave={handleInsightMouseLeave}
         >
@@ -95,7 +95,7 @@ export default function Navbar() {
           </Link>
         </li>
         <li
-          className='pt-[20px]  h-[48px] '
+          className='pt-[12px]  h-[48px] '
           onMouseEnter={handleHistoryMouseEnter}
           onMouseLeave={handleHistoryMouseLeave}
         >
