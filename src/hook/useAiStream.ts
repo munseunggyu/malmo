@@ -155,7 +155,7 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
             const json = JSON.parse(jsonText);
             hatRole = json.role;
             if (roleType === "title") {
-              setSummaryRoomName(json.message);
+              setSummaryRoomName(prev => prev + json.message);
             }
             if (roleType === "hats") {
               setSseMeetingData(prev => {
