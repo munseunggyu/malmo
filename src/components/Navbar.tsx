@@ -4,7 +4,6 @@ import Image from "next/image";
 import React, { useState } from "react";
 import icoNew from "../../public/ico-new.png";
 import moveItem from "../../public/moveItem.svg";
-import icoSetting from "../../public/ico-settings.svg";
 import mainLogo from "../../public/logo-malmo.png";
 import { signOut } from "next-auth/react";
 import { useModal } from "@/hook/useModal";
@@ -128,11 +127,8 @@ export default function Navbar() {
             로그아웃
           </button>
         )}
-        <button
-          onClick={() => setShowSetting(prev => !prev)}
-          className='opacity-[0.6] hover:opacity-[1]'
-        >
-          <Image src={icoSetting} width={24} height={24} alt='설정' />
+        <button onClick={() => setShowSetting(prev => !prev)} className=''>
+          <div className="w-[24px] h-[24px] bg-[url('/ico-settings.svg')] hover:bg-[url('/ico-settings-hover.svg')]" />
         </button>
       </div>
       {openModal && (
