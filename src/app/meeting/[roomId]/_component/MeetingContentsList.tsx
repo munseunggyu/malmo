@@ -74,7 +74,7 @@ export function MeetingContentsList({
   return (
     <>
       <ul
-        className='flex flex-col gap-y-[12px] h-[75%] overflow-scroll w-full'
+        className='flex flex-col gap-y-[12px] h-[75%] overflow-scroll w-full pt-[40px]'
         onClick={stopClick}
       >
         {renderHats()}
