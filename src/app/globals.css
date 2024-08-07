@@ -163,3 +163,7 @@ body {
     ),
     #4f4f4f;
 }
+
+textarea::placeholder {
+  color: #838586;
+}

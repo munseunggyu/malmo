@@ -125,7 +125,7 @@ export default function ChatModal({
 
   return (
     <div
-      className='bg-bg-1 max-w-[1052px] w-full pt-[80px] pb-[60px] px-[88px] mx-md'
+      className='bg-bg-1 max-w-[1052px] w-full pt-[80px] pb-[60px] px-[88px] mx-md rounded-md'
       onClick={handleStopPropgation}
     >
       <div className='mx-auto'>
@@ -163,7 +163,7 @@ export default function ChatModal({
                   onClick={() => setOpenChooseMessage(prev => !prev)}
                   className='ml-auto cursor-pointer'
                 >
-                  줄이기
+                  {openChooseMessage ? "줄이기" : "전체보기"}
                 </div>
               </div>
               <h3 className='mt-[36px] mb-sm'>
@@ -176,7 +176,7 @@ export default function ChatModal({
             placeholder={`타겟 유저와 분야가 명확할수록 구체적인 피드백을 받을 수 있어요.\n(ex. 재테크에 관심이 많은 30-50대 직장인을 대상으로 맞춤형 투자 및 자산 관에 대한 AI 금융 자문 서비스는 어때?)`}
             value={message}
             onChange={changeMessage}
-            classNames={`bg-bg-3 rounded-sm px-[20px] py-[18px] w-full hover_bg font-[600] focus_bg focus:border focus:border-main `}
+            classNames={`bg-[#1D2123] rounded-sm px-[20px] py-[18px] w-full  font-[600] border border-bg-1 focus:bg-[#121516] focus:border-main `}
           />
 
           <Button

@@ -23,7 +23,7 @@ const Dropdown = ({ selectedOption, setSelectedOption, options }: IProps) => {
     setIsOpen(false);
   };
 
-  const bgColor = isOpen ? styles.open_bg : "bg-bg-3";
+  const bgColor = isOpen ? "bg-[#121516]" : "bg-[#1D2123]";
 
   return (
     <div>
@@ -40,8 +40,8 @@ const Dropdown = ({ selectedOption, setSelectedOption, options }: IProps) => {
         <Image
           src={icoArrow}
           alt={isOpen ? "open" : "close"}
-          width={32}
-          height={32}
+          width={20}
+          height={20}
           className={isOpen ? "" : "origin-center rotate-180"}
         />
       </button>
