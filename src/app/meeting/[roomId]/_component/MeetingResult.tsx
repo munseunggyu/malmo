@@ -17,10 +17,10 @@ export default function MeetingResult({
       className=''
       style={{
         flex: 185,
-        height: "calc(100% - 100px)"
+        height: "calc(100% - 60px)"
       }}
     >
-      <h3 className='border border-divider-1 border-x-0 px-[68px] py-[16px] title3'>
+      <h3 className='border border-divider-1 border-x-0 px-[60px] py-[18px] title3'>
         회의 결과
       </h3>
       <section className='px-[40px] py-[20px] h-full'>
@@ -38,8 +38,9 @@ export default function MeetingResult({
                 alt='회의 결과 요약중...'
               />
             ) : (
-              <AiMessageLoading size={225} className='mb-md mt-sm' />
+              <AiMessageLoading size={225} className='mb-[83px] mt-[74px]' />
             )}
+
             <p className='subtitle1 text-center text-[#ffffff66] relative top-[-30px'>
               회의가 끝나면
               <br />
