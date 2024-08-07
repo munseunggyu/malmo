@@ -31,8 +31,8 @@ export default function BookMarkItem({ ...bookMark }: IBookMark) {
   };
 
   return (
-    <div className='max-w-[940px]'>
-      <Image src={icoStar} alt='북마크' width={24} height={24} />
+    <div>
+      <Image src={icoStar} alt='북마크' width={16} height={15} />
       <div className='mt-sm py-sm px-md bg-bg-3 rounded-sm '>
         <div className='flex items-center mb-[20px]'>
           <p className='w-[80%] title2 truncate mr-[20px]'>
