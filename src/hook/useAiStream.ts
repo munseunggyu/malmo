@@ -219,7 +219,7 @@ export const useAiStream = ({ userId, roomId, isNew, phase }: IAiStream) => {
           role: sseMeetingData[phase].aiMessages[i].role,
           chatPhaseId,
           roleType: "hats",
-          gptType: nowGptType
+          gptType: "HYPER_CLOVA"
         });
         if (res === "isFail") {
           nowGptType = "OPEN_AI";
