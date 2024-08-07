@@ -17,7 +17,7 @@ export default function NoDataUi({ children }: IProps) {
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
 
   return (
-    <div className='flex flex-col items-center mt-[70px]'>
+    <div className='flex flex-col items-center '>
       <Image src={noDataImg} width={388} height={288} alt='no data' />
       <p className='text-center text-[#ffffff66] title2 pb-md'>{children}</p>
       <Button onClick={handleOpenMoal} classNames='w-[380px]'>
