@@ -51,11 +51,22 @@
             <th>설명</th>
         </tr>
         <tr>
-            <td><img src="https://s7.ezgif.com/tmp/ezgif-7-62bd5eb48c.gif"
-                  width="430px"  alt=""></td>
-            <td>메인 홈<ul>
+            <td><img src="https://github.com/user-attachments/assets/1643b1f4-0827-42ba-9c4b-484ffadb939f"
+                  width="430px"  alt="">
+            </td>
+                  </td>
+            <td>메인 홈(로그인 전)<ul>
                     <li>비 로그인 상태에서 웹 페이지의 간단한 설명과 모자와 회의 하러가기 버튼 버튼 노출</li>
                     <li>모자와 회의 하러가기 버튼 클릭 시 네이버 로그인 버튼 노출</li>
+                </ul>
+            </td>
+        </tr>
+            <tr>
+            <td>
+            <img src="https://github.com/user-attachments/assets/5f67a823-d9cd-4168-ac2f-90e46b6f7fab"
+            width="430px"  alt=""></td>
+                  </td>
+            <td>메인 홈(로그인 후)<ul>
                     <li>
                     로그인 완료 이후 Navbar와 Guide 버튼가 모자 설명 링크가 있는 Carousel UI 노출
                     </li>
@@ -63,13 +74,12 @@
             </td>
         </tr>
         <tr>
-            <td><img src="https://s7.ezgif.com/tmp/ezgif-7-8a4d402da0.gif"
+            <td><img src="https://github.com/user-attachments/assets/0ff43bae-4d00-4995-b189-ca77f7b29820"
                   width="430px"  alt=""></td>
             <td>회의 방 생성 모달
               <ul>
                 <li>유저는 회의 방 생성 시 카테고리와 회의하고 싶은 아이디어 입력</li>
                 <li>카테고리와 아이디어 모두 입력 시 모자와 회의하기 버튼 활성화</li>
-                <li>언어모델 HyperCLOVA X, GTP-4o mini 중 선택 가능</li>
               </ul>
             </td>
         </tr>
@@ -88,14 +98,20 @@
             <th>설명</th>
         </tr>
         <tr>
-            <td><img src="https://s4.ezgif.com/tmp/ezgif-4-d917ad8b60.gif"
+            <td><img src="https://github.com/user-attachments/assets/81a38593-6abd-413f-b18e-9268ec61dd5a"
                   width="430px"  alt=""></td>
             <td>회의 방<ul>
                     <li>회의 방에 대한 제목 요약</li>
                     <li>유저가 작성한 내용을 토대로 6개의 모자가 브레인 스토밍 시작</li>
                     <li>모자들의 발언이 모두 종료되면 해당 회차 회의에 대한 요약 정리</li>
                     <li>
-                      AI 토큰 부족 등 에러 발생 시 발언 재생성 버튼 활성화
+                        모자 발언의 추가 회의하기하기 버튼 클릭 시 해당 모자 참조 후 추가 회의 시작
+                    </li>
+                    <li>
+                        복사 아이콘 클릭 시 글 복사 및 toast 메시지
+                    </li>
+                    <li>
+                        별 아이콘 클릭 시 해당 발언 북마크 및 toast 메시지
                     </li>
                     <li>
                      다음 회차를 생성할 수 있는 버튼 활성화
@@ -118,7 +134,7 @@
             <th>설명</th>
         </tr>
         <tr>
-            <td><img src="https://s2.ezgif.com/tmp/ezgif-2-715d2796ca.gif"
+            <td><img src="https://github.com/user-attachments/assets/14d1bf99-461a-4096-b771-a1d546bd5b45"
                   width="430px"  alt=""></td>
               <td>내역<ul>
                     <li>이전 회의에 대한 내역 리스트</li>
@@ -143,7 +159,7 @@
             <th>설명</th>
         </tr>
         <tr>
-            <td><img src="https://s2.ezgif.com/tmp/ezgif-2-f93c87d1d1.gif"
+            <td><img src="https://github.com/user-attachments/assets/1ed0b7da-40b5-499e-ae79-0baf9b650d4d"
                   width="430px"  alt=""></td>
               <td>북마크<ul>
                     <li>회의 방에서 Ai 발언들을 각각 북마크 가능</li>
