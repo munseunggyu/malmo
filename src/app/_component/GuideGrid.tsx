@@ -12,21 +12,21 @@ export default function GuideGrid() {
       alt: "사업",
       title: "사업",
       contents:
-        "AI 기반 특화 데이터 보안 서비스로 기업의\n데이터 관리를 자동화하는 아이디어는 어때?"
+        "Ai캐릭터 앱 사업 할거야. 북미의 애니 팬들을 타겟\n으로 , 캐릭터와 스토리 생성을 해주는 서비스야. "
     },
     {
       img: icoTjfrmt as StaticImageData,
       alt: "사이드 프로젝트",
       title: "사이드 프로젝트",
       contents:
-        "반려동물의 노화 관리: 노령 반려동물을 위한\n특별한 케어 방법에 대한 주제는 어때?"
+        "사이드프로젝트로 코딩 능률을 높여주는 음악을 모\n아둔 웹사이트를 개발하는 건 어때?"
     },
     {
-      img: icoVideo as StaticImageData,
-      alt: "유튜브",
-      title: "기타",
+      img: icoBusiness as StaticImageData,
+      alt: "사업",
+      title: "사업",
       contents:
-        "세계 각국의 전통 축제와 행사를 직접 체험하고\n 꿀팁을 주는 유튜브 컨셉은 어때?"
+        "요즘 두바이 초콜릿이 유행이니까,두바이 초콜릿과\n크루아상을 결합해서 사업을 하는 건 어떨까?"
     }
   ];
   return (
