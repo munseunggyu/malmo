@@ -13,27 +13,11 @@ import ModalContainer from "./ui/ModalContainer";
 import ChatModal from "./ChatModal";
 import Link from "next/link";
 import { useRouter, useSelectedLayoutSegment } from "next/navigation";
-import { useHoverChip } from "@/hook/useHoverChip";
-import BubbleUi from "./ui/BubbleUi";
 
 export default function Navbar() {
   const router = useRouter();
   const { openModal, handleCloseModal, handleOpenMoal } = useModal();
-  const {
-    isHover: isNewHover,
-    handleMouseEnter: handleNewMouseEnter,
-    handleMouseLeave: handleNewMouseLeave
-  } = useHoverChip();
-  const {
-    isHover: isInsightHover,
-    handleMouseEnter: handleInsightMouseEnter,
-    handleMouseLeave: handleInsightMouseLeave
-  } = useHoverChip();
-  const {
-    isHover: isHistoryHover,
-    handleMouseEnter: handleHistoryMouseEnter,
-    handleMouseLeave: handleHistoryMouseLeave
-  } = useHoverChip();
+
   const [showSetting, setShowSetting] = useState(false);
 
   const segment = useSelectedLayoutSegment();
@@ -55,27 +39,11 @@ export default function Navbar() {
           </Link>
         </li>
         <li className='pt-[24px] hover:opacity-[0.8] relative'>
-          <button
-            onClick={handleOpenMoal}
-            onMouseEnter={handleNewMouseEnter}
-            onMouseLeave={handleNewMouseLeave}
-          >
+          <button onClick={handleOpenMoal}>
             <Image src={icoNew} width={48} height={48} alt='채팅 방 추가' />
           </button>
-          {isNewHover && (
-            <BubbleUi
-              className='w-[51px] bg-[#ffffff33] bottom-[-30px] z-10'
-              color='black'
-            >
-              새 대화
-            </BubbleUi>
-          )}
         </li>
-        <li
-          className='pt-[20px] h-[64px] mb-2 '
-          onMouseEnter={handleInsightMouseEnter}
-          onMouseLeave={handleInsightMouseLeave}
-        >
+        <li className='pt-[20px] h-[64px] mb-2 '>
           <Link
             href={"/bookmark"}
             className={` block w-[24px] h-[24px]  hover:bg-[url('/hoverStarImg.png')] hover:my-0 hover:w-[44px] hover:h-[44px] bg-cover bg-center relative ${
@@ -83,22 +51,9 @@ export default function Navbar() {
                 ? "w-[44px] h-[44px] bg-[url('/activeStarImg.png')] "
                 : "bg-[url('/ico-star.svg')] my-[10px]"
             }`}
-          >
-            {isInsightHover && (
-              <BubbleUi
-                className='w-[58px] bg-[#ffffff33] bottom-[-30px] left-[-6px] z-10'
-                color='black'
-              >
-                인사이트
-              </BubbleUi>
-            )}
-          </Link>
+          ></Link>
         </li>
-        <li
-          className='pt-[20px]  h-[48px] '
-          onMouseEnter={handleHistoryMouseEnter}
-          onMouseLeave={handleHistoryMouseLeave}
-        >
+        <li className='pt-[20px]  h-[48px] '>
           <Link
             href={"/history"}
             className={`block w-[24px] h-[24px]  hover:bg-[url('/hoverHistoryImg.png')] hover:my-0 hover:w-[44px] hover:h-[44px] bg-cover bg-center relative ${
@@ -106,16 +61,7 @@ export default function Navbar() {
                 ? "w-[44px] h-[44px] bg-[url('/activeHistoryImg.png')] my-0"
                 : "bg-[url('/ico-historyfile.svg')] my-[10px] "
             }`}
-          >
-            {isHistoryHover && (
-              <BubbleUi
-                className='w-[58px] bg-[#ffffff33] bottom-[-30px] left-[-6px] z-10'
-                color='black'
-              >
-                히스토리
-              </BubbleUi>
-            )}
-          </Link>
+          ></Link>
         </li>
       </ul>
       <div className='mt-auto relative'>
