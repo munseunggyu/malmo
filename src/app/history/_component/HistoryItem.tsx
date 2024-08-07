@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import DelButton from "@/components/ui/DelButton";
 import { useHistoryMutation } from "@/queries.ts/history";
+import Link from "next/link";
 
 export default function HistoryItem({ ...history }) {
   const { data: session } = useSession();
@@ -24,8 +25,15 @@ export default function HistoryItem({ ...history }) {
 
   return (
     <>
-      <p className='max-w-[830px] w-full truncate'>{history.roomName || "-"}</p>
-      <ol className='min-w-[305px] flex gap-x-xs ml-auto'>
+      <Link
+        href={`/meeting/${history.id}?phase=${1}&isDirect=true`}
+        className='w-full'
+      >
+        <p className='max-w-[830px] w-full truncate'>
+          {history.roomName || "-"}
+        </p>
+      </Link>
+      <ol className='min-w-[305px] flex gap-x-xs ml-auto justify-end'>
         {Array.from({ length: history.phase }).map((_, index) => (
           <li key={index}>
             <MeetingPhaseButton
