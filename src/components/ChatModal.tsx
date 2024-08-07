@@ -12,9 +12,6 @@ import Button from "./ui/Button";
 import { useSession } from "next-auth/react";
 import { fetchNewMeeting } from "@/services/newMeeting";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useGptType } from "@/app/stores/gptType";
-import Image from "next/image";
-import icoArrow from "../../public/ico-arrow.svg";
 
 import styles from "./ChatModal.module.css";
 import { useQueryClient } from "@tanstack/react-query";
@@ -49,27 +46,7 @@ export default function ChatModal({
   const chatPhaseId3 = searchParams.get("chatPhaseId3") || "";
   const [selectedOption, setSelectedOption] = useState("선택해 주세요.");
 
-  const options = [
-    "유튜브",
-    "블로그",
-    "사업 아이템",
-    "사이드 프로젝트",
-    "기타"
-  ];
-  const gptType = useGptType(state => state.gptType);
-  const changeGptType = useGptType(state => state.changeGptType);
-
-  const [gptToogle, setGptToogle] = useState(false);
-  const gptOptions = [
-    {
-      name: "HyperCLOVA X",
-      value: "HYPER_CLOVA"
-    },
-    {
-      name: "GPT-4o mini",
-      value: "OPEN_AI"
-    }
-  ];
+  const options = ["사업", "사이드 프로젝트", "블로그", "기타"];
 
   const [message, setMessage] = useState("");
   const changeMessage: ChangeEventHandler<HTMLTextAreaElement> = e => {
@@ -196,54 +173,15 @@ export default function ChatModal({
           )}
 
           <TextArea
-            placeholder='입력해주세요.'
+            placeholder={`타겟 유저와 분야가 명확할수록 구체적인 피드백을 받을 수 있어요.\n(ex. 재테크에 관심이 많은 30-50대 직장인을 대상으로 맞춤형 투자 및 자산 관에 대한 AI 금융 자문 서비스는 어때?)`}
             value={message}
             onChange={changeMessage}
             classNames={`bg-bg-3 rounded-sm px-[20px] py-[18px] w-full hover_bg font-[600] focus_bg focus:border focus:border-main `}
           />
-          <div className='mb-[140px]'>
-            <button
-              onClick={() => setGptToogle(prev => !prev)}
-              type='button'
-              className={`w-full flex items-center justify-end text-left  py-[8px] px-[16px] rounded-sm gap-x-xs`}
-            >
-              <span className={"text-[#ffffff33]"}>{gptType.name}</span>
-              <Image
-                src={icoArrow}
-                alt={gptToogle ? "open" : "close"}
-                width={20}
-                height={20}
-                className={`
-                  opacity-[0.2]
-                  ${gptToogle ? "" : "origin-center rotate-180 "}`}
-              />
-            </button>
-            {gptToogle && (
-              <div className={`relative `}>
-                <ul
-                  className={`absolute z-10 top-3 right-0 w-[170px] h-[80px] overflow-hidden rounded-sm  border border-bg-3`}
-                >
-                  {gptOptions.map((option, idx) => (
-                    <li
-                      key={idx}
-                      className={`cursor-pointer py-[8px] z-10 text-white px-sm  tex-center hover:bg-bg-3 ${
-                        option.value !== gptType.value ? "text-[#ffffff33]" : ""
-                      }`}
-                      onClick={() => {
-                        setGptToogle(false);
-                        changeGptType(option.value);
-                      }}
-                    >
-                      <button type='button'>{option.name}</button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
+
           <Button
             disabled={disabledBtn}
-            classNames='block mx-auto'
+            classNames='block mx-auto mt-[44px]'
             onClick={handleCreateMeeting}
           >
             모자와 회의하기 →
