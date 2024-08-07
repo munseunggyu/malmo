@@ -38,7 +38,7 @@ export default function MeetingContents({
         회의 공간
       </h3>
       <section
-        className='pt-[40px] flex flex-col items-center'
+        className=' flex flex-col items-center'
         style={{
           height: "calc(100% - 60px)"
         }}
