@@ -18,8 +18,10 @@ export default function NoDataUi({ children }: IProps) {
 
   return (
     <div className='flex flex-col items-center '>
-      <Image src={noDataImg} width={388} height={288} alt='no data' />
-      <p className='text-center text-[#ffffff66] title2 pb-md'>{children}</p>
+      <Image src={noDataImg} width={300} height={288} alt='no data' />
+      <p className='text-center text-[#ffffff66] text-[16px] pb-md'>
+        {children}
+      </p>
       <Button onClick={handleOpenMoal} classNames='w-[380px]'>
         모자와 회의 하러가기 →
       </Button>
