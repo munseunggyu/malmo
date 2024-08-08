@@ -173,7 +173,7 @@ export default function ChatModal({
           )}
 
           <TextArea
-            placeholder={`타겟 유저와 분야가 명확할수록 구체적인 피드백을 받을 수 있어요.\n(ex. 재테크에 관심이 많은 30-50대 직장인을 대상으로 맞춤형 투자 및 자산 관에 대한 AI 금융 자문 서비스는 어때?)`}
+            placeholder={`타겟 유저와 분야가 명확할수록 구체적인 피드백을 받을 수 있어요.\n(ex. 사업을 하려고 하는데, 재테크에 관심이 많은 30-50대 직장인을 대상으로 한 금융 자문 AI서비스는 어때? 주요 기능은 마이데이터 기반으로 AI가 1:1 자산 관리 방법을 알려주고, 투자 종목을 추천해주는거야. )`}
             value={message}
             onChange={changeMessage}
             classNames={`bg-[#1D2123] rounded-sm px-[20px] py-[18px] w-full  font-[600] border border-bg-1 focus:bg-[#121516] focus:border-main `}
