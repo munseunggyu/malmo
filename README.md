@@ -4,6 +4,8 @@
 
 [말모말모.pdf](https://github.com/user-attachments/files/16404618/default.pdf)
 
+회원가입 없이 서비스 이용방법 - 네이버로 계속하기 클릭 후 "Sign in with Credentials" 버튼 클릭 시 회원가입 되지 않고 테스트할 수 있습니다
+
 <img width="1136" alt="malmo_thumbnail" src="https://github.com/user-attachments/assets/80dff216-a9fe-4153-af61-b6305c992b39">
 
 ## AI와 당신의 아이디어를 브레인스토밍으로 발전시켜주는 서비스, "말모말모"
